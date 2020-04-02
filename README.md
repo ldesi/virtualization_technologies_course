@@ -12,6 +12,6 @@
 - Machine with Debian 10 for demo on Xen
 
 These machines could be physical or virtual one (recommended option).
-If you no idea on how installing a virtual machine, please follow the guide _install_vm.pdf_
+If you have no idea on how to install a virtual machine, please follow the guide _install_vm.pdf_
 
 
