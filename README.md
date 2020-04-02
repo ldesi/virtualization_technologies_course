@@ -1,10 +1,10 @@
 # Contents of directories
 
 - **1_full_virtualization**: demo on QEMU/KVM
-- **2_paravirtualization**: demo on Xen	
-- **3_container_virtualization**: demo on Docker and Docker Swarm
-- **4_unikernel**: demo on unikernels
-- **5_real_time_virtualization**: demo on real-time hypervisors
+- **2_paravirtualization**: demo on Xen	(to be added)
+- **3_container_virtualization**: demo on Docker and Docker Swarm (to be added)
+- **4_unikernel**: demo on unikernels (to be added)
+- **5_real_time_virtualization**: demo on real-time hypervisors (to be added)
 
 # Prerequisites
 
