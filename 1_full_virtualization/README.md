@@ -17,7 +17,9 @@ Hands on summary:
 If 0 it means that VT-x or AMD-v are not enabled.
 Please enable it by BIOS. If you are using a VM, you need to enable virtualization extensions according to your type-2 hypervisors.
 See the following links:
+
 **Bios, VMware Workstation, and VirtualBox**: https://www.tactig.com/enable-intel-vt-x-amd-virtualization-pc-vmware-virtualbox/
+
 **VMware Fusion**: http://techgenix.com/vmware-fusion-5-enable-vt-xept-inside-a-virtual-machine-288/
 
 
