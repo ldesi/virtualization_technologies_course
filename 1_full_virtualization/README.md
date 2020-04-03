@@ -15,7 +15,7 @@ Hands on summary:
 ```
 
 If 0 it means that VT-x or AMD-v are not enabled.
-Please enable it by BIOS. Add details for enabling in type-2 hypervisors (VMware Fusion/Workstation, Virtualbox, Parallels)
+Please enable it by BIOS. If you are using a VM, you need to enable virtualization extensions according to your type-2 hypervisors.
 
 ### 2. Check if KVM module is loaded
 
