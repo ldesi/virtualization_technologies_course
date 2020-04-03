@@ -13,6 +13,6 @@
 
 These machines could be physical or virtual one (recommended option).
 
-If you have no idea on how to install a virtual machine, please follow the guide [a link](https://github.com/ldesi/virtualization_technologies_course/blob/master/install_vm/install_vm.pdf)
+If you have no idea on how to install a virtual machine, please follow the guide [_install_vm.pdf_](https://github.com/ldesi/virtualization_technologies_course/blob/master/install_vm/install_vm.pdf)
 
 
