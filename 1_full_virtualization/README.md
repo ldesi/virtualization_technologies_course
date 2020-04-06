@@ -152,6 +152,28 @@ The steps to follow are similar to the ones seen before for Basic usage section.
 
 To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device (backend) on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate``flag.
 
+Before starting VM installation, if you want to get some details about _virbr0_ network bridge, you can list the current network list and get info about it:
+```
+root@test:~# virsh net-list
+ Name                 State      Autostart     Persistent
+----------------------------------------------------------
+ default              active     yes           yes
+
+root@test:~# virsh net-info default
+Name:           default
+UUID:           f8854cf1-d499-4733-a7b6-bf97bf092938
+Active:         yes
+Persistent:     yes
+Autostart:      yes
+Bridge:         virbr0
+
+root@test:~#
+```
+The virbr0, or "Virtual Bridge 0" interface is used for NAT (Network Address Translation). It is provided by the **libvirt** library by default once installed the first time.
+
+
+To install the VM, run:
+
 ```
 virt-install -n ubuntu_test_virsh \
 --description "Test VM with Ubuntu virsh" \
@@ -164,6 +186,8 @@ virt-install -n ubuntu_test_virsh \
 --network bridge:virbr0
 --accelerate	
 ```
+
+A configuration named __VM_NAME.xml__ wille be stored at __/etc/libvirt/qemu/__ by default.
 
 To get a list of os variants install _libosinfo-bin_, and run ``osinfo-query os``.
 
