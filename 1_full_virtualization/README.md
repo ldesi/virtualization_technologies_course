@@ -150,7 +150,7 @@ The steps to follow are similar to the ones seen before for Basic usage section.
 
 ## Use _virsh_
 
-To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device on network bridge _virbr0_ (default bridge).
+To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate``flag.
 
 ```
 virt-install -n ubuntu_test_virsh \
@@ -162,6 +162,7 @@ virt-install -n ubuntu_test_virsh \
 --disk path=/root/test_ubuntu_mini_virsh.img,bus=ide,size=5  \
 --cdrom /root/mini.iso \
 --network bridge:virbr0
+--accelerate	
 ```
 
 To get a list of os variants install _libosinfo-bin_, and run ``osinfo-query os``.
@@ -175,6 +176,23 @@ Once _ubuntu_test_virsh_ virtual machine is running, you can manage it in many d
 # virsh suspend ubuntu_test_virsh
 # virsh resume ubuntu_test_virsh
 ```
+
+To manage snapshots:
+
+#### Create snapshots
+sudo virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME
+sudo virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME $DESCRIPTION
+
+#### List current snapshots
+sudo virsh snapshot-list $VM_ID
+
+#### Restore snapshots
+virsh snapshot-revert $VM_ID $SNAPSHOT_NAME
+
+#### Delete snapshots
+virsh snapshot-delete $VM_ID $SNAPSHOT_NAME
+
+
 
 To delete the VM:
 ```
