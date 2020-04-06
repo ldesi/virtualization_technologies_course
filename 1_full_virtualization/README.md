@@ -113,7 +113,13 @@ EOF
 Assuming that we store the Ubuntu image file and init image file under /root, we can run the VM by using the following:
 
 ```
-# qemu-system-x86_64 -drive "file=/root/bionic-server-cloudimg-amd64.img,format=qcow2" -drive "file=/root/user-data.img,format=raw" -device e1000,netdev=net0 -netdev user,id=net0 -m 1024 -smp 4 -enable-kvm
+# qemu-system-x86_64 \
+-drive "file=/root/bionic-server-cloudimg-amd64.img,format=qcow2" \
+-drive "file=/root/user-data.img,format=raw" \
+-device e1000,netdev=net0 -netdev user,id=net0 \
+-m 1024 \
+-smp 4 \
+-enable-kvm
 ```
 
 In this case, we specified the e1000 network device, still using the SLIRP network backend.
