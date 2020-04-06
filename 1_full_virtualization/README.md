@@ -122,7 +122,17 @@ Assuming that we store the Ubuntu image file and init image file under /root, we
 -enable-kvm
 ```
 
-In this case, we specified the e1000 network device, still using the SLIRP network backend.
+In this case, we specified the e1000 network device, still using the SLIRP network backend. If we want to use SSH to access the VM, we need to forward the SSH host traffic to SSH VM traffic using the ``hostfwd=tcp::PORT-:22``option, where PORT is the port that we chosen for SSH forwarding. In the following, we chosen port 1234:
+
+```
+# qemu-system-x86_64 \
+-drive "file=/root/bionic-server-cloudimg-amd64.img,format=qcow2" \
+-drive "file=/root/user-data.img,format=raw" \
+-device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::1234-:22 \
+-m 1024 \
+-smp 4 \
+-enable-kvm
+```
 
 ## Use _virt-manager_
 
