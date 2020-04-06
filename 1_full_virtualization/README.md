@@ -108,7 +108,7 @@ chpasswd: { expire: False }
 ssh_pwauth: True
 EOF
 
-# cloud-localds my-init.img my-init-data
+# cloud-localds my-init-data.img my-init-data
 ```
 Assuming that we store the Ubuntu image file and init image file under /root, we can run the VM by using the following:
 
