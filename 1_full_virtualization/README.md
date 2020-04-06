@@ -101,11 +101,11 @@ To configure cloud-init, run the following:
 ```
 # apt-get install cloud-utils genisoimage
 
-# cat > my-init-data <<EOF \
-#cloud-config \
-password: test \
-chpasswd: { expire: False } \
-ssh_pwauth: True \
+# cat >my-init-data <<EOF
+#cloud-config
+password: test
+chpasswd: { expire: False }
+ssh_pwauth: True
 EOF
 
 # cloud-localds my-init.img my-init-data
