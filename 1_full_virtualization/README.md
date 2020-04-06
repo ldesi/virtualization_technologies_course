@@ -30,7 +30,7 @@ If not loaded, please load it by:
 ```
 #eg. for intel
 modprobe kvm  
-sudo modprobe kvm_inte
+sudo modprobe kvm_intel
 ```
 
 Check kernel logs if something wrong:
