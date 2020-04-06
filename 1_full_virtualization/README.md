@@ -150,7 +150,7 @@ The steps to follow are similar to the ones seen before for Basic usage section.
 
 ## Use _virsh_
 
-To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate``flag.
+To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device (backend) on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate``flag.
 
 ```
 virt-install -n ubuntu_test_virsh \
