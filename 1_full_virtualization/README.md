@@ -180,18 +180,24 @@ Once _ubuntu_test_virsh_ virtual machine is running, you can manage it in many d
 To manage snapshots:
 
 #### Create snapshots
-sudo virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME
-sudo virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME $DESCRIPTION
-
+```
+virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME
+```
+```
+virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME $DESCRIPTION
+```
 #### List current snapshots
-sudo virsh snapshot-list $VM_ID
-
+```
+virsh snapshot-list $VM_ID
+```
 #### Restore snapshots
+```
 virsh snapshot-revert $VM_ID $SNAPSHOT_NAME
-
+```
 #### Delete snapshots
+```
 virsh snapshot-delete $VM_ID $SNAPSHOT_NAME
-
+```
 
 
 To delete the VM:
