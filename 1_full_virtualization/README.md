@@ -71,11 +71,11 @@ For example, create an image of 5Gb:
 ```
 
 Then, we can start the installation of minimal ubuntu as it will be done on a physical machine. We need to specify
-how much RAM dedicate to VM, for example 1Gb of RAM (-m 1024). Then, start qemu by booting form cdrom (-boot c).
+how many virtual CPUs we want (_-smp_ flag), how much RAM will be dedicated to VM, for example 1Gb of RAM (-m 1024). Then, start qemu by booting form cdrom (-boot c).
 
 ```
 # wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/mini.iso
-# qemu-system-x86_64 -hda test_ubuntu_mini.img -cdrom mini.iso -m 1024 -boot c -enable-kvm
+# qemu-system-x86_64 -smp 4 -hda test_ubuntu_mini.img -cdrom mini.iso -m 1024 -boot c -enable-kvm
 ```
 If we omit _-enable-kvm_ option, we will experience very bad performance because we are not exploiting the VT-x extensions.
 
