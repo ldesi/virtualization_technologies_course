@@ -92,7 +92,7 @@ sysctl -w net.ipv4.ping_group_range='0 2147483647'
 
 #### Use Ubuntu cloud images
 
-In order to speedup installation of a new VM, you can also create a new VM by using a preinstalled Linux image.
+In order to speedup installation of a new VM, you can also use a pre-installed Linux image.
 For example, we want to deploy an Ubuntu 18.04 cloud image using QEMU.
 Download the image from https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img.
 Please, note that such cloud images use Cloud-init VM initialization. Thus, you need to configure such cloud-init parameters.
