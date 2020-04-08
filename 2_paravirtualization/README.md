@@ -59,6 +59,12 @@ GRUB_CMDLINE_LINUX="console=ttyS1 console=hvc0"
 ...
 ```
 
+and run:
+
+```
+/usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 Now, if you reboot the machine, you could see another choice, Xen with Debian.
 
 ### 1. Create a PV Guest (basic option)
@@ -103,14 +109,14 @@ root@test:~# wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/ins
 root@test:~# wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/xen/initrd.gz
 ```
 
-Start creation of guest.
+Start the creation of the guest.
 Copy guest configuration file (in this repository) into /etc/xen and then run:
 
 ```
 root@test:~# xl create -c /etc/xen/ubuntu_bionic1804LTS.cfg
 ```
 
-The -c in this command tells xl that we wish to connect to the guest virtual console, a paravirtualized serial port within the domain that xen-create-image configured to listen with a getty.
+The -c in this command tells xl that we wish to connect to the guest virtual console, a paravirtualized serial port within the domain that xen-create-image configured to listen with a getty. This command also starts the VM.
 
 To shutdown created guest:
 ```
@@ -142,25 +148,35 @@ Finally, to boot the VM from the virtual disk you need to comment the _kernel_ a
 #ramdisk = "/root/initrd.gz"
 bootloader = "/usr/lib/xen-4.11/bin/pygrub"
 ```
-Now you can connect to VM console by:
+Please, note that the bootloader path depends on the installed Xen version.
+You can check the created and started VM by listing running VMs (you can notice that Dom0 VM is running):
 
 ```
-xl console ubud1
+root@test:/home/test# xl vm-list
+UUID                                  ID    name
+00000000-0000-0000-0000-000000000000  0    Domain-0
+8ebed37e-a7a9-43cb-bb7b-ab42db3e3df8  8    bionic1804LTS
+root@test:/home/test#
 ```
 
-disconnecting from the console using:
+You can connect to the running VM console by running:
+
+```
+root@test:~# xl console bionic1804LTS
+```
+
+and disconnecting from the console using:
 
 ```
 Ctrl+]
 ```
 
-### Create a HVM Guest (some hardware emulated)
+You can also install a VM by using libvirt and virt-install:
 
 ```
-# apt-get install qemu-system-x86
+root@test:~# apt install libvirt-clients libvirt-daemon-system virtinst
+root@test:~# virt-install --connect=xen:/// --name ubuntu_test_14.04 --ram 1024 --disk ubuntu_test_14.04.img,size=5 --location http://ftp.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/ --graphics none
 ```
-
-TODO
 
 ### References
 
