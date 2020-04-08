@@ -154,6 +154,7 @@ To install a new VM by command line you can use the _virt-install_ command. The 
 
 Before starting VM installation, if you want to get some details about _virbr0_ network bridge, you can list the current network list and get info about it:
 ```
+root@test:~# apt-get install libvirt-bin
 root@test:~# virsh net-list
  Name                 State      Autostart     Persistent
 ----------------------------------------------------------
