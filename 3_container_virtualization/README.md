@@ -1,11 +1,11 @@
 ## Tutorial Docker and Swarm
 
-This tutorial requires three Linux hosts which have Docker installed and can communicate over a network. These can be physical machines, virtual machines, or hosted in some other way.
-One of these machines is a manager (called manager1) and two of them are workers (worker1 and worker2).
+This tutorial requires three Linux hosts with Docker installed and can communicate over a network creating a Docker swarm. These can be physical machines, virtual machines, or hosted in some other way.
+One of these machines will be the swarm manager (called manager1) and the other two the swarm workers (worker1 and worker2).
 
 ### 1. Install Docker
 
-You need to install Docker on all of the 3 host machines (let's assume the names equal to _dockertest1_, _dockertest2_, and _dockertest3_):
+Firstly, you need to install Docker on all of the 3 host machines (let's assume the names equal to _dockertest1_, _dockertest2_, and _dockertest3_):
 
 ```
 apt-get update
@@ -304,7 +304,7 @@ tdmobeebksmj        test_webserver.3       nginx_test:latest   dockertest1      
 jcklkgn3o9yj         \_ test_webserver.3   nginx_test:latest   dockertest2         Shutdown            Shutdown 2 minutes ago
 root@dockertest1:~#
 ```
-The _test_webserver.3_ is in a Shutdown state on _dockertest2_ node and it is in a Running state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keep the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
+The _test_webserver.3_ is in a Shutdown state on _dockertest2_ node and it is in a Running state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keeps the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
 ```
 root@dockertest1:~# ./nginx_test/test_nginx.sh
 <h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>
@@ -315,4 +315,10 @@ root@dockertest1:~# ./nginx_test/test_nginx.sh
 
 root@dockertest1:~#
 ```
+
+You can reset to available state the _dockertest2_ node by running:
+```
+root@dockertest1:~# docker node update --availability available dockertest2
+```
+In that case, as soon as a task terminates or fails, the swarm manager reschedules another task on the _dockertest2_ node.
 
