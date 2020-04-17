@@ -318,7 +318,7 @@ root@dockertest1:~#
 
 You can reset to available state the _dockertest2_ node by running:
 ```
-root@dockertest1:~# docker node update --availability available dockertest2
+root@dockertest1:~# docker node update --availability active dockertest2
 ```
 In that case, as soon as a task terminates or fails, the swarm manager reschedules another task on the _dockertest2_ node.
 
