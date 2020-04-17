@@ -1,7 +1,7 @@
 # Contents
 
 - **1_full_virtualization**: demo on QEMU/KVM
-- **2_paravirtualization**: demo on Xen	(_to be added_)
+- **2_paravirtualization**: demo on Xen
 - **3_container_virtualization**: demo on Docker and Docker Swarm
 - **install_vm**: files for installing VM
 # Prerequisites
