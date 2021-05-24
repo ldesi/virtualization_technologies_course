@@ -252,7 +252,7 @@ jcklkgn3o9yj        test_webserver.3    nginx_test:latest   dockertest2         
 root@dockertest1:~#
 ```
 You can see that is running an instance of test_webserver service (the nginx webserver) on each node in the testbed.
-By running _test_nginx.sh_ script, we make HTTP requests only towards the manager node (dockertest1: 10.0.20.151) and print the header part of html page. You can see the container private IP:
+By running _test_nginx.sh_ script, we make HTTP requests only towards the manager node (dockertest1: 10.0.20.151) and print the html within the response. You can see the container private IP:
 
 ```
 root@dockertest1:~/nginx_test# ./test_nginx.sh
