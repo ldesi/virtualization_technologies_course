@@ -210,12 +210,73 @@ output) should be about the same.
 
 ### Devices not specified in bananapi.c
 
-If you do not specify some devices that will be used by Linux kernel or jailhouse you should check the device tree and add to the jailhouse root cell configuration.
+If you do not specify some devices that will be used by Linux kernel or jailhouse you should check the **device tree** and add to the jailhouse root cell configuration. E.g., if we want to add IR devices of BananaPI M1 board:
 
 ```
 # apt-get install device-tree-compiler
 # dtc -I fs -O dts /sys/firmware/devicetree/base
 ```
+
+We obtain more or less the following:
+
+```
+                ir@1c21800 {
+                        compatible = "allwinner,sun4i-a10-ir";
+                        clocks = <0x2 0x4b 0x2 0x74>;
+                        clock-names = "apb", "ir";
+                        status = "okay";
+                        interrupts = <0x0 0x5 0x4>;
+                        reg = <0x1c21800 0x40>;
+                        pinctrl-0 = <0x26>;
+                        pinctrl-names = "default";
+                };
+                ...
+                ir@1c21c00 {
+                        compatible = "allwinner,sun4i-a10-ir";
+                        clocks = <0x2 0x4c 0x2 0x75>;
+                        clock-names = "apb", "ir";
+                        status = "disabled";
+                        interrupts = <0x0 0x6 0x4>;
+                        reg = <0x1c21c00 0x40>;
+                };
+```
+Then, we need to specifiy into ``.config`` -> ``.mem_regions`` of ``bananapi.c`` configuration file, the following memory regions:
+
+```
+struct {
+        struct jailhouse_system header;
+        __u64 cpus[1];
+        struct jailhouse_memory mem_regions[35];
+        struct jailhouse_irqchip irqchips[1];
+        struct jailhouse_pci_device pci_devices[1];
+} __attribute__((packed)) config = {
+
+        ...
+        
+        .mem_regions{
+                ...
+                /* IR0 */ {
+                       .phys_start = 0x01c21800,
+                       .virt_start = 0x01c21800,
+                       .size = 0x40,
+                       .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                               JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_8 | JAILHOUSE_MEM_IO_32,
+                },
+                /* IR1 */ {
+                       .phys_start = 0x01c21c00,
+                       .virt_start = 0x01c21c00,
+                       .size = 0x40,
+                       .flags = JAILHOUSE_MEM_READ | JAILHOUSE_MEM_WRITE |
+                               JAILHOUSE_MEM_IO | JAILHOUSE_MEM_IO_8 | JAILHOUSE_MEM_IO_32,
+                }
+                ...
+        }
+        ...
+  }
+```
+
+Naturally, we need to update accordingly the number of memory-mapped regions used by the root cell (``struct jailhouse_memory mem_regions[]``)
+
 ## References
 
 
