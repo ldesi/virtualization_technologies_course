@@ -4,7 +4,7 @@
 - **[2_paravirtualization](2_paravirtualization)**: demo on Xen;
 - **[3_container_virtualization](3_container_virtualization)**: demo on Docker and Docker Swarm;
 - **[5_real_time_virtualization](5_real_time_virtualization)**: demo on using Jailhouse partitioning hypervisor with FreeRTOS;
-- **[install_vm]()**: files for installing VM.
+- **[install_vm](install_vm)**: files for installing VM.
 
 # Prerequisites
 
