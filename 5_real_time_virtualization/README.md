@@ -185,7 +185,7 @@ You need to install drivers that can be found in [2].
 
 On BananaPI, execute:
 
-```
+```console
 //install pre-requisites
 # apt-get install tty-clock stress-ng -y
 
@@ -219,7 +219,7 @@ If you do not specify some devices that will be used by Linux kernel or jailhous
 
 We obtain more or less the following:
 
-```
+```c
                 ir@1c21800 {
                         compatible = "allwinner,sun4i-a10-ir";
                         clocks = <0x2 0x4b 0x2 0x74>;
@@ -242,7 +242,7 @@ We obtain more or less the following:
 ```
 Then, we need to specifiy into ``.config`` -> ``.mem_regions`` of ``bananapi.c`` configuration file, the following memory regions:
 
-```
+```c
 struct {
         struct jailhouse_system header;
         __u64 cpus[1];
