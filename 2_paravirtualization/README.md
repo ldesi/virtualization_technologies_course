@@ -26,7 +26,7 @@ iface xenbr0 inet dhcp
 	bridge_ports ens33
 ```
 
-Get up xenbr0 interface and check info about bridge:
+Get up xenbr0 interface and check info about the bridge:
 
 ```
 root@test:~# ifup xenbr0
@@ -43,9 +43,9 @@ root@test:~#
 root@test:~# apt-get install xen-system-amd64
 ```
 
-By default on a Xen system the majority of the hosts memory is assigned to dom0 on boot and dom0's size is dynamically modified ("ballooned") automatically in order to accommodate new guests which are started.
+By default on a Xen system, the majority of the host's memory is assigned to dom0 on boot, and dom0's size is dynamically modified ("ballooned") automatically to accommodate new guests which are started.
 
-In order to properly configure Dom0 Xen, you need to modify the _/etc/default/grub.d/xen.cfg_ file. For example, add the following to give 1Gb RAM to Dom0, and enable serial logging (assuming COM2) both from Linux kernel and Xen:
+To properly configure Dom0 Xen, you need to modify the _/etc/default/grub.d/xen.cfg_ file. For example, add the following to give 1Gb RAM to Dom0, and enable serial logging (assuming COM2) both from Linux kernel and Xen:
 
 ```
 root@test:~# vim /etc/default/grub.d/xen.cfg
@@ -69,7 +69,7 @@ Now, if you reboot the machine, you could see another choice, Xen with Debian.
 
 ### 1. Create a PV Guest (basic option)
 
-Check info about the hypervisor and Dom0 including version, free memory etc:
+Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
 ```
 root@test:~# xl list
@@ -87,7 +87,7 @@ root@test:~# vgs
 root@test:~#
 ```
 
-Create 5Gb volume for guest:
+Create 5Gb volume for the guest:
 ```
 root@test:~# lvcreate -L 5G -n lv_vm_ubuntu /dev/test-vg
 ``` 
@@ -142,7 +142,7 @@ listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 You can notice that 172.16.39.175 is the IP of PV Guest.
 
-Finally, to boot the VM from the virtual disk you need to comment the _kernel_ and _ramdisk_ option, and remove comment on _bootloader_ option in the ``/etc/xen/ubuntu_bionic1804LTS.cfg`` configuration file:
+Finally, to boot the VM from the virtual disk you need to comment the _kernel_ and _ramdisk_ option, and remove the comment on _bootloader_ option in the ``/etc/xen/ubuntu_bionic1804LTS.cfg`` configuration file:
 ```
 #kernel = "/root/vmlinuz"
 #ramdisk = "/root/initrd.gz"

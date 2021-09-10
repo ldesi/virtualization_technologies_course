@@ -43,10 +43,8 @@ To generate this message, Docker took the following steps:
  1. The Docker client contacted the Docker daemon.
  2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
     (amd64)
- 3. The Docker daemon created a new container from that image which runs the
-    executable that produces the output you are currently reading.
- 4. The Docker daemon streamed that output to the Docker client, which sent it
-    to your terminal.
+ 3. The Docker daemon created a new container from that image which runs the executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it to your terminal.
 
 To try something more ambitious, you can run an Ubuntu container with:
  $ docker run -it ubuntu bash
@@ -130,7 +128,7 @@ root@dockertest1:~#
 ```
 
 The * next to the node ID indicates that we are on this node
-Docker Engine swarm mode automatically names the node for the machine host name.
+Docker Engine swarm mode automatically names the node for the machine hostname.
 
 Now we can join the swarm (manager) by running the following command on _dockertest2_ and _dockertest3_ nodes, using the token generated on the manager node:
 ```
@@ -144,7 +142,7 @@ This node joined a swarm as a worker.
 root@dockertest3:~#
 ```
 
-We can also retrieve info about how joining the swarm by running the following on the manager node:
+We can also retrieve info about how to join the swarm by running the following on the manager node:
 ```
 root@dockertest1:~# docker swarm join-token worker
 To add a worker to this swarm, run the following command:
@@ -153,7 +151,7 @@ To add a worker to this swarm, run the following command:
 
 root@dockertest1:~# docker swarm join-token manager
 ```
-Now from the manager node we can check the swarm status:
+Now from the manager node, we can check the swarm status:
 
 ```
 root@dockertest1:~# docker node ls
@@ -166,7 +164,7 @@ root@dockertest1:~#
 
 ### 3. Deploy and scale service
 
-Start a service from the manager node. We specify the helloworld service, with alpine image, that perform the ping to www.google.it:
+Start a service from the manager node. We specify the helloworld service, with alpine image, that performs the ping to www.google.it:
 ```
 docker service create --replicas 1 --name helloworld alpine ping www.google.it
 ```
@@ -222,12 +220,12 @@ root@dockertest2:~#
 
 The nginx test service will be used to show load-balancing and high-availability features of Docker Swarm.
 You will deploy the service with 3 replicas managed automatically by Docker Swarm.
-To deploy nginx test service, you firsly need to create the proper Docker image, by copying _nginx_test_ dir in all the machine in the testbed. Then, you need to run the following on all the nodes (manager and workers):
+To deploy the nginx test service, you firstly need to create the proper Docker image, by copying _nginx_test_ dir in all the machines in the testbed. Then, you need to run the following on all the nodes (manager and workers):
 
 ```
 # docker build -t nginx_test nginx_test/
 ```
-To check if image was built properly, run:
+To check if the image was built properly, run:
 
 ```
 root@dockertest1:~# docker images
@@ -272,9 +270,9 @@ root@dockertest1:~/nginx_test# ./test_nginx.sh
 ...
 root@dockertest1:~/nginx_test#
 ```
-We can observe that Docker Swarm automatically balance requests towards service replicas.
+We can observe that Docker Swarm automatically balances requests towards service replicas.
 
-In order to test high-availability, you can update the status of some worker node. Docker Swarm allows you to DRAIN a node and prevent that node from receiving new tasks from the swarm manager. It also means the manager stops tasks running on the node and launches replica tasks on a node with ACTIVE availability.
+To test high availability, you can update the status of some worker nodes. Docker Swarm allows you to DRAIN a node and prevent that node from receiving new tasks from the swarm manager. It also means the manager stops tasks running on the node and launches replica tasks on a node with ACTIVE availability.
 
 To DRAIN the _dockertest2_ node:
 ```
@@ -294,7 +292,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 e99723ee78e6        nginx_test:latest   "/usr/local/edit_ind…"   42 minutes ago      Exited (0) 35 seconds ago                       test_webserver.3.jcklkgn3o9yjzzudmor97pua0
 root@dockertest2:~#
 ```
-The Swarm manager reschedule the instance on other nodes in the swarm. To check this run on manager node:
+The Swarm manager reschedules the instance on other nodes in the swarm. To check this run on manager node:
 ```
 root@dockertest1:~# docker service ps test_webserver
 ID                  NAME                   IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
@@ -304,7 +302,7 @@ tdmobeebksmj        test_webserver.3       nginx_test:latest   dockertest1      
 jcklkgn3o9yj         \_ test_webserver.3   nginx_test:latest   dockertest2         Shutdown            Shutdown 2 minutes ago
 root@dockertest1:~#
 ```
-The _test_webserver.3_ is in a Shutdown state on _dockertest2_ node and it is in a Running state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keeps the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
+The _test_webserver.3_ is in a Shutdown state on _dockertest2_ node and it is in a _Running_ state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keeps the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
 ```
 root@dockertest1:~# ./nginx_test/test_nginx.sh
 <h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>

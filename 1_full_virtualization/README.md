@@ -1,4 +1,4 @@
-Hands on summary:
+Hands-on summary:
 
 * Basic usage of KVM/QEMU
 * Use of virt-manager
@@ -17,7 +17,7 @@ Hands on summary:
 If 0 it means that VT-x or AMD-v are not enabled.
 Please enable it by BIOS. If you are using a VM, you need to enable virtualization extensions according to your type-2 hypervisors.
 
-### 2. Check if KVM module is loaded
+### 2. Check if the KVM module is loaded
 
 ```
 # lsmod | grep kvm  
@@ -51,11 +51,11 @@ Check details about created special device /dev/kvm:
 # ls -la /dev/kvm
 crw-rw---- 1 root kvm 10, 232 Mar 11 18:01 /dev/kvm
 ```
-The device is a charcter device and it is writable by kvm group.
+The device is a character device and it is writable by the kvm group.
 
 ### 4. Creating and managing images
 
-In order to start a VM, we need to create a "container" or virtual drive image. In this tutorial, we will use qcow2 format. It is the most featured format in QEMU and is meant to replace qcow. This format support sparse images independent of underlying fs capabilities. It supports multiple VM-snapshots, encryption (AES) and compression. 
+In order to start a VM, we need to create a "container" or virtual drive image. In this tutorial, we will use qcow2 format. It is the most featured format in QEMU and is meant to replace qcow. This format supports sparse images independent of underlying fs capabilities. It supports multiple VM-snapshots, encryption (AES), and compression. 
 
 Creating of images is supported through qemu-img command.
 
@@ -71,7 +71,7 @@ For example, create an image of 5Gb:
 ```
 
 Then, we can start the installation of minimal ubuntu as it will be done on a physical machine. We need to specify
-how many virtual CPUs we want (_-smp_ flag), how much RAM will be dedicated to VM, for example 1Gb of RAM (-m 1024). Then, start qemu by booting form cdrom (-boot c).
+how many virtual CPUs we want (_-smp_ flag), how much RAM will be dedicated to VM, for example, 1Gb of RAM (-m 1024). Then, start qemu by booting from cdrom (-boot c).
 
 ```
 # wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/mini.iso
@@ -92,7 +92,7 @@ sysctl -w net.ipv4.ping_group_range='0 2147483647'
 
 #### Use Ubuntu cloud images
 
-In order to speedup installation of a new VM, you can also use a pre-installed Linux image.
+In order to speed up the installation of a new VM, you can also use a pre-installed Linux image.
 For example, we want to deploy an Ubuntu 18.04 cloud image using QEMU.
 Download the image from https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img.
 Please, note that such cloud images use Cloud-init VM initialization. Thus, you need to configure such cloud-init parameters.
@@ -146,11 +146,11 @@ and simply start using:
 ```
 # virt-manager
 ```
-The steps to follow are similar to the ones seen before for Basic usage section.
+The steps to follow are similar to the ones seen before for the Basic usage section.
 
 ## Use _virsh_
 
-To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device (backend) on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate``flag.
+To install a new VM by command line you can use the _virt-install_ command. The following command starts the installation of Ubuntu (as before) in a VM with 4 vCPU, 1Gb RAM, IDE disk of 5Gb, and a TAP device (backend) on network bridge _virbr0_ (default bridge). We enable also QEMU/KVM acceleration by ``--accelerate`` flag.
 
 Before starting VM installation, if you want to get some details about _virbr0_ network bridge, you can list the current network list and get info about it:
 ```

@@ -86,7 +86,7 @@ On Compiling machine,
 apt-get update && apt-get install -y u-boot-tools sshfs make gcc vim python3-mako device-tree-compiler 
 ```
 
-Ensure to download jailhouse, freertos cell, and the proper linux version for Jailhouse (in this demo, we used Siemens Jailhouse-enabled Linux, v4.19). You need to enable FuseFS.
+Ensure to download jailhouse, FreeRTOS cell, and the proper Linux version for Jailhouse (in this demo, we used Siemens Jailhouse-enabled Linux, v4.19). You need to enable FuseFS.
 
 ```
 # git clone https://github.com/siemens/freertos-cell
@@ -96,7 +96,7 @@ Ensure to download jailhouse, freertos cell, and the proper linux version for Ja
 # make ARCH=arm menuconfig 
 ````
 
-Obtaining cross compiling tool-chain from [Linaro Official site](https://www.linaro.org/downloads/). In this case, we use v7.3.1-2018.05-x86_64_arm.
+Obtaining cross-compiling tool-chain from [Linaro Official site](https://www.linaro.org/downloads/). In this case, we use v7.3.1-2018.05-x86_64_arm.
 
 ```
 # wget https://releases.linaro.org/components/toolchain/binaries/7.3-2018.05/arm-linux-gnueabihf/gcc-linaro-7.3.1-2018.05-x86_64_arm-linux-gnueabihf.tar.xz
@@ -105,12 +105,12 @@ Obtaining cross compiling tool-chain from [Linaro Official site](https://www.lin
 # [IF NEEDED, clean previous compilation] make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19/ clean
 ```
 
-Compile the kernel, jailhouse, and freertos:
+Compile the kernel, jailhouse, and FreeRTOS:
 ```
 # make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j$(nproc) uImage modules dtbs LOADADDR=40008000
 # cd ..
 ```
-Before compiling jailhouse and freertos, you need to patch ``bananapi_jailhouse.patch``, in order to include missing devices.
+Before compiling jailhouse and FreeRTOS, you need to patch ``bananapi_jailhouse.patch``, to include missing devices.
 
 ```
 # cd /path/to/freertos-cell 
@@ -125,7 +125,7 @@ Before compiling jailhouse and freertos, you need to patch ``bananapi_jailhouse.
 # make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19/
 ```
 
-If you encounter errors during compilation of FreeRTOS, edit Makefile for bypassing gcc stack checks by adding:
+If you encounter errors during the compilation of FreeRTOS, edit Makefile for bypassing gcc stack checks by adding:
 
 ```
 CFLAGS += -fno-stack-protector -U_FORTIFY_SOURCE
@@ -175,7 +175,7 @@ $ modprobe jailhouse
 ## Demo
 
 Some notes. UART0 is used for kernel log (refer to J11 in [1]) and UART1 is used for FreeRTOS cell (refer to J12 in [1]).
-The command to listen on serial port is (in that case is USB to serial adapter):
+The command to listen on the serial port is (in that case is USB to serial adapter):
 
 ```
 # screen /dev/tty.SLAB_USBtoUART 115200 8N1
@@ -200,7 +200,7 @@ On BananaPI, execute:
 # ./stress_cpu.sh TIMEOUT
 ```
 
-In the following, what is supposed to show started demo. In order to check if Jailhouse is able to assure temporal isolation,
+In the following, we show an example of what is supposed to be shown once start the demo. To check if Jailhouse can assure temporal isolation,
 launch ``stress_cpu.sh`` before and after ``start_freertos_cell.sh``. You will get, e.g., that the CPU throughput (CPU field in ``stress_cpu.sh```
 output) should be about the same.
 
@@ -210,7 +210,7 @@ output) should be about the same.
 
 ### Devices not specified in bananapi.c
 
-If you do not specified some devices that will be used by Linux kernel or jailhouse you should check the device tree and add to jailhouse root cell configuration.
+If you do not specify some devices that will be used by Linux kernel or jailhouse you should check the device tree and add to the jailhouse root cell configuration.
 
 ```
 # apt-get install device-tree-compiler
