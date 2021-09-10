@@ -201,7 +201,7 @@ On BananaPI, execute:
 ```
 
 In the following, we show an example of what is supposed to be shown once start the demo. To check if Jailhouse can assure temporal isolation,
-launch ``stress_cpu.sh`` before and after ``start_freertos_cell.sh``. You will get, e.g., that the CPU throughput (CPU field in ``stress_cpu.sh```
+launch ``stress_cpu.sh`` before and after ``start_freertos_cell.sh``. You will get, e.g., that the CPU throughput (CPU field in ``stress_cpu.sh``
 output) should be about the same.
 
 <div style="text-align:center"><img src="imgs/demo_example.png" /></div>
