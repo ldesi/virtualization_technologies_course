@@ -252,7 +252,7 @@ jcklkgn3o9yj        test_webserver.3    nginx_test:latest   dockertest2         
 root@dockertest1:~#
 ```
 You can see that is running an instance of test_webserver service (the nginx webserver) on each node in the testbed.
-By running _test_nginx.sh_ script, we make HTTP requests only towards the manager node (dockertest1: 10.0.20.151) and print the header part of html page. You can see the container private IP:
+By running _test_nginx.sh_ script, we make HTTP requests only towards the manager node (dockertest1: 10.0.20.151) and print only the \<h1\> part within the response (check _test_nginx.sh_). You can see the container private IP:
 
 ```
 root@dockertest1:~/nginx_test# ./test_nginx.sh
@@ -318,7 +318,7 @@ root@dockertest1:~#
 
 You can reset to available state the _dockertest2_ node by running:
 ```
-root@dockertest1:~# docker node update --availability available dockertest2
+root@dockertest1:~# docker node update --availability active dockertest2
 ```
 In that case, as soon as a task terminates or fails, the swarm manager reschedules another task on the _dockertest2_ node.
 
