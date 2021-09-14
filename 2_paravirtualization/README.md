@@ -72,6 +72,12 @@ Now, if you reboot the machine, you could see another choice, Xen with Debian.
 Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
 ```
+//Start xen services
+root@test:~# /etc/init.d/xencommons start
+root@test:~# /etc/init.d/xendomains start
+root@test:~# /etc/init.d/xen-watchdog start
+root@test:~# /etc/init.d/xendriverdomain start
+
 root@test:~# xl list
 Name                                        ID   Mem VCPUs	State	Time(s)
 Domain-0                                     0 16072     8     r-----     366.8
