@@ -107,7 +107,7 @@ Obtaining cross-compiling tool-chain from [Linaro Official site](https://www.lin
 
 Compile the kernel, jailhouse, and FreeRTOS:
 ```
-# make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j$(nproc) uImage modules dtbs LOADADDR=40008000
+# make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j$(( $(nproc) + 1 )) uImage modules dtbs LOADADDR=40008000
 # cd ..
 ```
 Before compiling jailhouse and FreeRTOS, you need to patch ``bananapi_jailhouse.patch``, to include missing devices.
