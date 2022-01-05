@@ -144,13 +144,15 @@ In this case, we specified the e1000 network device, still using the SLIRP netwo
 _virt-manager_ provides a GUI for managing virtual machines. You need to install it by:
 
 ```
-# apt-get install libvirt-daemon-system libvirt-clients bridge-utils virtinst
-# systemctl is-active libvirtd
+$ sudo apt-get install libvirt-daemon-system libvirt-clients bridge-utils virtinst
+$ sudo systemctl is-active libvirtd
+$ sudo usermod -aG libvirt $USER
+$ sudo usermod -aG kvm $USER
 ```
 and simply start using:
 
 ```
-# virt-manager
+$ virt-manager
 ```
 The steps to follow are similar to the ones seen before for the Basic usage section.
 
