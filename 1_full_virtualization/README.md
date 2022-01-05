@@ -113,6 +113,8 @@ EOF
 
 # cloud-localds my-init-data.img my-init-data
 ```
+
+The cloud images have set the default user to ``ubuntu``.
 Assuming that we store the Ubuntu image file and init image file under /root, we can run the VM by using the following:
 
 ```
