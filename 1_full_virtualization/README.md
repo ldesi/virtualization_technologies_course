@@ -214,22 +214,22 @@ To manage snapshots:
 
 Create snapshots
 ```
-virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME
+# virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME
 ```
 ```
-virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME $DESCRIPTION
+# virsh snapshot-create-as $VM_ID $SNAPSHOT_NAME $DESCRIPTION
 ```
 List current snapshots
 ```
-virsh snapshot-list $VM_ID
+# virsh snapshot-list $VM_ID
 ```
 Restore snapshots
 ```
-virsh snapshot-revert $VM_ID $SNAPSHOT_NAME
+# virsh snapshot-revert $VM_ID $SNAPSHOT_NAME
 ```
 Delete snapshots
 ```
-virsh snapshot-delete $VM_ID $SNAPSHOT_NAME
+# virsh snapshot-delete $VM_ID $SNAPSHOT_NAME
 ```
 
 
@@ -237,8 +237,3 @@ To delete the VM:
 ```
 # virsh destroy ubuntu_test_virsh && virsh undefine ubuntu_test_virsh
 ```
-
-
-
-
-
