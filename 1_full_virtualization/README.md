@@ -41,9 +41,12 @@ Check kernel logs if something wrong:
 
 ### 3. Install qemu-kvm userspace tool
 
+You can install qemu (and related kvm packages) by installing the pre-built package:
 ```
 # sudo apt-get install qemu-kvm
 ```
+
+However, you can also make a custom build of qemu. Please, follow this [guide](https://wiki.qemu.org/Hosts/Linux).
 
 Check details about created special device /dev/kvm:
 
