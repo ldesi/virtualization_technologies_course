@@ -156,7 +156,7 @@ The -c in this command tells xl that we wish to connect to the guest virtual con
 
 To shutdown created guest:
 ```
-root@test:~# xl shutdown ubuntu_bionic1804LTS
+root@test:~# xl shutdown bionic1804LTS
 ```
 After creating VM and installing OS, you can get the assigned IP with:
 
