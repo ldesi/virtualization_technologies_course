@@ -66,6 +66,13 @@ and run:
 ```
 
 Now, if you reboot the machine, you could see another choice, Xen with Debian.
+Once booted, check Xen version:
+
+```
+root@test:~# dmesg |grep Xen\ version
+[    0.361489] Xen version: 4.14.4-pre (preserve-AD)
+root@test:~#
+```
 
 ### 1. Create a PV Guest (basic option)
 
