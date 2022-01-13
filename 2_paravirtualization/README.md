@@ -91,6 +91,31 @@ Domain-0                                     0 16072     8     r-----     366.8
 root@test:~#
 ```
 
+Newer version of Xen can include these services within the ``xen`` service.
+
+Now, create a logical volume within a volume group to be used as virtual disk space by Xen DomUs.
+
+```
+root@test:~# apt-get install lvm2
+root@test:~# fdisk -l
+Disk /dev/sda: 40 GiB, 42949672960 bytes, 83886080 sectors
+Disk model: VMware Virtual S
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x50e6b91f
+
+Device     Boot    Start      End  Sectors  Size Id Type
+/dev/sda1  *        2048 39061503 39059456 18,6G 83 Linux
+/dev/sda2       39061504 46874623  7813120  3,7G 82 Linux swap / Solaris
+/dev/sda3       46876670 83884031 37007362 17,6G  5 Extended
+/dev/sda5       46876672 83884031 37007360 17,6G 8e Linux LVM
+root@test:~# pvcreate /dev/sda5
+  Physical volume "/dev/sda5" successfully created.
+root@test:~# vgcreate test-vg /dev/sda5
+```
+
 List lvm groups:
 
 ```
@@ -108,10 +133,8 @@ List logical volumes:
 
 ```
 root@test:~# lvs
-  LV           VG      Attr       LSize    Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
-  lv_vm_ubuntu test-vg -wi-a-----    5.00g
-  root         test-vg -wi-ao---- <123.70g
-  swap_1       test-vg -wi-ao----  <16.00g
+  LV           VG      Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv_vm_ubuntu test-vg -wi-a----- 5,00g
 root@test:~#
 ```
 
