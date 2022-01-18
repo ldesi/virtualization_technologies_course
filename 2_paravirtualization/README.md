@@ -154,6 +154,11 @@ root@test:~# xl create -c /etc/xen/ubuntu_bionic1804LTS.cfg
 
 The -c in this command tells xl that we wish to connect to the guest virtual console, a paravirtualized serial port within the domain that xen-create-image configured to listen with a getty. This command also starts the VM.
 
+Further, note line ``disk = [ '/dev/test-vg/lv_vm_ubuntu,raw,xvda,rw' ]``. The disk device drive could be:
+- ``xvda``: disk is not emulated by using qemu-dm. ``xvd`` device is always the best choice to use if you want use a PV driver;
+- ``hda``: disk will be emulated as an IDE device, which will be initialized by the IDE driver of the Linux guest;
+- ``sda`` will be emulated as a SCSI device, which will be initialized by the sym53c8xx driver. The ``sym53c8xx`` driver is often build as a kernel module.
+
 To shutdown created guest:
 ```
 root@test:~# xl shutdown bionic1804LTS
