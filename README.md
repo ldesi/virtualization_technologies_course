@@ -8,8 +8,8 @@
 
 # Prerequisites
 
-- Machine with Ubuntu 18.04 LTS for demos on QEMU and Docker
-- Machine with Debian 10 for the demo on Xen
+- Machine with Ubuntu 20.04 LTS for demos on QEMU and Docker
+- Machine with Debian 11 for the demo on Xen
 
 These machines could be physical or virtual (recommended option).
 
