@@ -106,7 +106,7 @@ To configure cloud-init, run the following:
 
 # cat >user-data <<EOF
 #cloud-config
-password: test
+password: ubuntu
 chpasswd: { expire: False }
 ssh_pwauth: True
 EOF
@@ -114,7 +114,7 @@ EOF
 # cloud-localds user-data.img user-data
 ```
 
-The cloud images have set the default user to ``ubuntu``.
+The cloud images have set the default user to ``ubuntu``, and we configured a password equal to ``ubuntu``.
 Assuming that we store the Ubuntu image file and init image file under /root, we can run the VM by using the following:
 
 ```
