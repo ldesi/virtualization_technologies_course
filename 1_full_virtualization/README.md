@@ -191,9 +191,9 @@ To install the VM, run:
 --os-variant=ubuntu18.04 \
 --ram=1024 \
 --vcpus=4 \
---disk path=test_ubuntu_mini_virsh.img,bus=ide,size=5  \
+--disk path=test_ubuntu_mini_virsh.img,bus=scsi,size=5  \
 --cdrom mini.iso \
---network bridge:virbr0
+--network bridge:virbr0 \
 --accelerate	
 ```
 
