@@ -184,14 +184,15 @@ The virbr0, or "Virtual Bridge 0" interface is used for NAT (Network Address Tra
 To install the VM, run:
 
 ```
-virt-install -n ubuntu_test_virsh \
+# qemu-img create -f qcow2 test_ubuntu_mini_virsh.img 5G
+# virt-install -n ubuntu_test_virsh \
 --description "Test VM with Ubuntu virsh" \
 --os-type=Linux \
 --os-variant=ubuntu18.04 \
 --ram=1024 \
 --vcpus=4 \
---disk path=/root/test_ubuntu_mini_virsh.img,bus=ide,size=5  \
---cdrom /root/mini.iso \
+--disk path=test_ubuntu_mini_virsh.img,bus=ide,size=5  \
+--cdrom mini.iso \
 --network bridge:virbr0
 --accelerate	
 ```
