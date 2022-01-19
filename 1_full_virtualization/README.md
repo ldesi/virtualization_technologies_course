@@ -184,7 +184,6 @@ The virbr0, or "Virtual Bridge 0" interface is used for NAT (Network Address Tra
 To install the VM, run:
 
 ```
-# qemu-img create -f qcow2 test_ubuntu_mini_virsh.img 5G
 # virt-install -n ubuntu_test_virsh \
 --description "Test VM with Ubuntu virsh" \
 --os-type=Linux \
@@ -197,6 +196,22 @@ To install the VM, run:
 --accelerate	
 ```
 
+In order to use cloud images (like before with Ubuntu image) we need to specify qcow2 format for disk element and use the ``--boot hd`` option:
+
+```
+# virt-install -n ubuntu_test_virsh_qcow \
+--description "Test VM with Ubuntu virsh" \
+--os-type=Linux \
+--os-variant=ubuntu18.04 \
+--ram=1024 \
+--vcpus=4 \
+--disk bionic-server-cloudimg-amd64.img,format=qcow2 \
+--disk user-data.img,format=raw \
+--network bridge:virbr0 \
+--accelerate \
+--boot hd
+```
+
 A configuration named __VM_NAME.xml__ wille be stored at __/etc/libvirt/qemu/__ by default.
 
 To get a list of os variants install _libosinfo-bin_, and run ``osinfo-query os``.
@@ -204,11 +219,11 @@ To get a list of os variants install _libosinfo-bin_, and run ``osinfo-query os`
 Once _ubuntu_test_virsh_ virtual machine is running, you can manage it in many different ways, with virsh:
 
 ```
-# virsh start ubuntu_test_virsh
-# virsh reboot ubuntu_test_virsh
-# virsh shutdown ubuntu_test_virsh
-# virsh suspend ubuntu_test_virsh
-# virsh resume ubuntu_test_virsh
+# virsh start __VM_NAME__
+# virsh reboot __VM_NAME__
+# virsh shutdown __VM_NAME__
+# virsh suspend __VM_NAME__
+# virsh resume __VM_NAME__
 ```
 
 To manage snapshots:
@@ -236,5 +251,5 @@ Delete snapshots
 
 To delete the VM:
 ```
-# virsh destroy ubuntu_test_virsh && virsh undefine ubuntu_test_virsh
+# virsh destroy __VM_NAME__ && virsh undefine __VM_NAME__
 ```
