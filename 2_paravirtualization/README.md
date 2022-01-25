@@ -1,10 +1,10 @@
 ## Summary
 
 In this tutorial we will see:
-* Basic installation of Xen on Debian 10
-* Create a PV Guest
+* Basic installation of Xen 4.14 on Debian 11
+* Create a PV, HVM, PVHVM guests
 
-## Basic installation of Xen on Debian 10
+## Basic installation of Xen 4.14 on Debian 11
 
 ### 1. Setup network
 
@@ -74,7 +74,7 @@ root@test:~# dmesg |grep Xen\ version
 root@test:~#
 ```
 
-### 1. PV Guest
+### 1. PV guest
 
 Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
