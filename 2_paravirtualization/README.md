@@ -4,9 +4,7 @@ In this tutorial we will see:
 * Basic installation of Xen 4.14 on Debian 11
 * Create a PV, HVM, PVHVM guests
 
-## Basic installation of Xen 4.14 on Debian 11
-
-### 1. Setup network
+### Setup network
 
 ```
 root@test:# apt-get install bridge-utils
@@ -37,7 +35,7 @@ xenbr0		8000.00505686cf9c	no		ens33
 root@test:~#
 ```
 
-### 1. Install XEN
+### Install XEN
 
 ```
 root@test:~# apt-get install xen-system-amd64
@@ -74,7 +72,7 @@ root@test:~# dmesg |grep Xen\ version
 root@test:~#
 ```
 
-### 1. PV guest
+### PV guest
 
 Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
@@ -238,5 +236,6 @@ test@test:~$
 
 - https://help.ubuntu.com/community/Xen
 - https://wiki.xenproject.org/wiki/Xen_Project_Beginners_Guide
+- https://wiki.xenproject.org/wiki/Xen_Linux_PV_on_HVM_drivers
 
 
