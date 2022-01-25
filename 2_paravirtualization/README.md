@@ -219,6 +219,20 @@ root@test:~# apt install libvirt-clients libvirt-daemon-system virtinst
 root@test:~# virt-install --connect=xen:/// --name ubuntu_test_14.04 --ram 1024 --disk ubuntu_test_14.04.img,size=5 --location http://ftp.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/ --graphics none
 ```
 
+## VM in PVHVM mode
+
+One you start the VM in PVHVM, try to check, e.g., pv drivers loaded into the HVM machine.
+
+```
+test@test:~$ dmesg |grep -i xen
+...
+[    0.000000] Xen Platform PCI: I/O protocol version 1
+[    0.000000] Netfront and the Xen platform PCI driver have been compiled for this kernel: unplug emulated NICs.
+[    0.000000] Blkfront and the Xen platform PCI driver have been compiled for this kernel: unplug emulated disks.
+...
+test@test:~$
+```
+
 ### References
 
 - https://help.ubuntu.com/community/Xen
