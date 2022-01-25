@@ -2,7 +2,7 @@
 
 In this tutorial we will see:
 * Basic installation of Xen 4.14 on Debian 11
-* Create a PV, HVM, PVHVM guests
+* Creation of PV, HVM, PVHVM guests
 
 ### Setup network
 
@@ -70,6 +70,14 @@ Once booted, check Xen version:
 root@test:~# dmesg |grep Xen\ version
 [    0.361489] Xen version: 4.14.4-pre (preserve-AD)
 root@test:~#
+```
+
+Please, note that we give all physical CPUs to Dom0 with the given configuration. Generally, it is recommended to limit the number of Dom0 vCPUs in order to not heavily impact execution of DomUs. Accordingly, we need to edit the configuration file /etc/default/grub.d/xen.cfg by using the ``dom0_max_vcpus``parameter to specify the amount of vCPUs (e.g., 2 vCPUs) allocated to Dom0:
+
+```
+...
+GRUB_CMDLINE_XEN="com2=115200,8n1 console=com2 dom0_mem=1024M,max:1024M dom0_max_vcpus=2 iommu=dom0-passthrough"
+...
 ```
 
 ### PV guest
