@@ -149,7 +149,7 @@ Start the creation of the guest.
 Copy guest configuration file (in this repository) into /etc/xen and then run:
 
 ```
-root@test:~# xl create -c /etc/xen/ubuntu_bionic1804LTS.cfg
+root@test:~# xl create -c /etc/xen/ubuntu-pv-example.cfg
 ```
 
 The -c in this command tells xl that we wish to connect to the guest virtual console, a paravirtualized serial port within the domain that xen-create-image configured to listen with a getty. This command also starts the VM.
@@ -161,12 +161,12 @@ Further, note line ``disk = [ '/dev/test-vg/lv_vm_ubuntu,raw,xvda,rw' ]``. The d
 
 To shutdown created guest:
 ```
-root@test:~# xl shutdown bionic1804LTS
+root@test:~# xl shutdown ubuntu-pv-example
 ```
 After creating VM and installing OS, you can get the assigned IP with:
 
 ```
-root@test:# xl network-list bionic1804LTS
+root@test:# xl network-list ubuntu-pv-example
 Idx BE Mac Addr.         handle state evt-ch   tx-/rx-ring-ref BE-path
 0   0  00:16:3e:57:db:c5     0     4     -1    -1/-1          /local/domain/0/backend/vif/2/0
 ```
@@ -183,7 +183,7 @@ listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 You can notice that 172.16.39.175 is the IP of PV Guest.
 
-Finally, to boot the VM from the virtual disk you need to comment the _kernel_ and _ramdisk_ option, and remove the comment on _bootloader_ option in the ``/etc/xen/ubuntu_bionic1804LTS.cfg`` configuration file:
+Finally, to boot the VM from the virtual disk you need to comment the _kernel_ and _ramdisk_ option, and remove the comment on _bootloader_ option in the ``/etc/xen/ubuntu-pv-example.cfg`` configuration file:
 ```
 #kernel = "/root/vmlinuz"
 #ramdisk = "/root/initrd.gz"
@@ -196,14 +196,14 @@ You can check the created and started VM by listing running VMs (you can notice 
 root@test:/home/test# xl vm-list
 UUID                                  ID    name
 00000000-0000-0000-0000-000000000000  0    Domain-0
-8ebed37e-a7a9-43cb-bb7b-ab42db3e3df8  8    bionic1804LTS
+8ebed37e-a7a9-43cb-bb7b-ab42db3e3df8  8    ubuntu-pv-example
 root@test:/home/test#
 ```
 
 You can connect to the running VM console by running:
 
 ```
-root@test:~# xl console bionic1804LTS
+root@test:~# xl console ubuntu-pv-example
 ```
 
 and disconnecting from the console using:
@@ -221,7 +221,7 @@ root@test:~# virt-install --connect=xen:/// --name ubuntu_test_14.04 --ram 1024 
 
 ## VM in PVHVM mode
 
-One you start the VM in PVHVM, try to check, e.g., pv drivers loaded into the HVM machine.
+The [ubuntu-pvhvm-example.cfg](ubuntu-pvhvm-example.cfg) configuration file allows running a PVHVM VM. Once you start the VM in PVHVM, try to check, e.g., pv drivers loaded into the HVM machine.
 
 ```
 test@test:~$ dmesg |grep -i xen
