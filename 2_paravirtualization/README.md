@@ -74,7 +74,7 @@ root@test:~# dmesg |grep Xen\ version
 root@test:~#
 ```
 
-### 1. Create a PV Guest (basic option)
+### 1. PV Guest
 
 Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
@@ -219,9 +219,10 @@ root@test:~# apt install libvirt-clients libvirt-daemon-system virtinst
 root@test:~# virt-install --connect=xen:/// --name ubuntu_test_14.04 --ram 1024 --disk ubuntu_test_14.04.img,size=5 --location http://ftp.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/ --graphics none
 ```
 
-## VM in PVHVM mode
+### HVM and PVHVM guests
 
-The [ubuntu-pvhvm-example.cfg](ubuntu-pvhvm-example.cfg) configuration file allows running a PVHVM VM. Once you start the VM in PVHVM, try to check, e.g., pv drivers loaded into the HVM machine.
+The HVM mode inlcudes using hardware support to virtualize CPU. Virtualization hardware extensions are used to boost performance of the emulation. HVM requires Intel VT-x or AMD-V hardware extensions, and QEMU is used to emulate devices. In order to leverage paravirtualized drivers, you can leverage also PVHVM mode, which allows running PV guests within HVM context.
+The [ubuntu-hvm-example.cfg](ubuntu-hvm-example.cfg) and [ubuntu-pvhvm-example.cfg](ubuntu-pvhvm-example.cfg) configuration files allow running respectively a HVM and PVHVM VM. In particular, once you start the VM in PVHVM, try to check, e.g., if pv drivers are loaded wihtin the HVM machine.
 
 ```
 test@test:~$ dmesg |grep -i xen
