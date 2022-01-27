@@ -3,6 +3,8 @@
 In this tutorial we will see:
 * Basic installation of Xen 4.14 on Debian 11
 * Creation of PV, HVM, PVHVM guests
+* Xen tracing
+* Xen build from source code
 
 ### Setup network
 
