@@ -416,14 +416,14 @@ $ ... etc ...
 
 ```
 
-### KVM virtio and vhost
+### KVM and paravirtual devices: virtio and vhost
 
 #### Start VM with virtio-net device:
 
 ```
 # qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
 	-drive "file=user-data.img,format=raw" \
-	-device e1000,netdev=net0 -netdev user,id=net0 \
+	-net nic,model=virtio -net user \
 	-m 1024 -smp 4 -enable-kvm
 ```
 
@@ -434,7 +434,7 @@ On the host you need a kernel with ``CONFIG_VHOST_NET=y`` and in the guest you n
 ```
 qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
 	-drive "file=user-data.img,format=raw" \
-	-netdev type=tap,id=guest0,vhost=on -device virtio-net-pci,netdev=guest0 \
+	-netdev type=tap,id=guest0,script=/PATH/TO/qemu-ifup,vhost=on -device virtio-net-pci,netdev=guest0 \
 	-m 1024 -smp 4 -enable-kvm
 ```
 
