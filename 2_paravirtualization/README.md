@@ -430,7 +430,16 @@ $ ... etc ...
 
 ### Start VM with vhost-net device
 
-On the host you need a kernel with ``CONFIG_VHOST_NET=y`` and in the guest you need a kernel with ``CONFIG_PCI_MSI=y``. Then:
+On the host you need a kernel with ``CONFIG_VHOST_NET=y`` and in the guest you need a kernel with ``CONFIG_PCI_MSI=y``. Check on the host machine if vhost-related modules are loaded:
+
+```
+# lsmod |grep -i vhost
+vhost_net              32768  1
+vhost                  49152  1 vhost_net
+tap                    24576  1 vhost_net
+```
+
+Then:
 
 ```
 qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
