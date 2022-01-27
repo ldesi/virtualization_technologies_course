@@ -242,9 +242,10 @@ test@test:~$
 
 ### Xen tracing
 
+#### Xen trace with PV mode
 ```
-# xentrace -T 10 xentrace_sample
-# xenalyze xentrace_sample
+# xentrace -T 10 xentrace_sample_pv
+# xenalyze xentrace_sample_pv
 
 No output defined, using summary.
 Using VMX hardware-assisted virtualization.
@@ -314,6 +315,54 @@ PV events:
     evtchn_op                    [32]:     14
     physdev_op                   [33]:    159
     sysctl                       [35]:      1
+...
+```
+
+#### Xen trace with HVM mode
+
+```
+# xentrace -T 10 xentrace_sample_hvm
+# xenalyze xentrace_sample_hvm
+
+...
+
++-vmentry:     495516
++-vmexit :     825860
++-handler:    1190580
+
+...
+
+PV events:
+  emulate privop  78872
+  hypercall  495358
+    stack_switch                 [ 3]:  77018
+    xen_version                  [17]:    898
+    iret                         [23]: 206222
+    vcpu_op                      [24]:  65303
+    set_segment_base             [25]:  77018
+    sched_op                     [29]:  28084
+    evtchn_op                    [32]:  33104
+    physdev_op                   [33]:    182
+    (null)
+...
+-- v0 --
+ Runstates:
+   running:   32165  1.78s 132906 { 93171|134841|252207}
+  runnable:   32163  0.88s  65633 { 38001| 53037|12807477}
+        wake:   32163  0.88s  65633 { 38001| 53037|12807477}
+   offline:   32163  4.81s 358831 {165516|556005|3623421}
+ cpu affinity:       1 17926696455 {17926696455|17926696455|17926696455}
+   [2]:       1 17926696455 {17926696455|17926696455|17926696455}
+Exit reasons:
+ EXTERNAL_INTERRUPT          4  0.01s  0.13% 5650049 cyc {19515|1951695|20600784}
+  THERMAL_APIC(250): 2
+  CALL_FUNCTION(251): 1
+  EVENT_CHECK(252): 1
+ PENDING_INTERRUPT         182  0.00s  0.02% 20325 cyc {17553|19749|25695}
+ CR_ACCESS                 458  0.00s  0.02%  8330 cyc { 6237| 7740|10845}
+   cr0      458  0.00s  0.02%  8330 cyc { 6237| 7740|10845}
+ IO_INSTRUCTION          40647  5.48s 73.40% 323721 cyc { 8436|254469|798909}
+   (no handler)    22758  2.81s 37.61% 296248 cyc {150810|258420|468636}
 ...
 ```
 
