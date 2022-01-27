@@ -419,7 +419,7 @@ $ ... etc ...
 
 ## KVM and paravirtual devices: virtio and vhost
 
-### Start VM with virtio-net device:
+### Start VM with virtio-net device:
 
 ```
 # qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
@@ -428,7 +428,7 @@ $ ... etc ...
 	-m 1024 -smp 4 -enable-kvm
 ```
 
-### Start VM with vhost-net device
+### Start VM with vhost-net device
 
 On the host you need a kernel with ``CONFIG_VHOST_NET=y`` and in the guest you need a kernel with ``CONFIG_PCI_MSI=y``. Then:
 
