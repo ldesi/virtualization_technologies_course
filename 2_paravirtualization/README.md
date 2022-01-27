@@ -419,7 +419,7 @@ $ ... etc ...
 
 ## KVM and paravirtual devices: virtio and vhost
 
-### Start VM with virtio-net device:
+### Start VM with virtio-net device
 
 ```
 # qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
