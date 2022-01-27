@@ -240,6 +240,54 @@ test@test:~$ dmesg |grep -i xen
 test@test:~$
 ```
 
+### Build Xen from source code
+
+```
+# git clone git://xenbits.xen.org/xen.git
+
+# //update /sbin/installkernel
+
+# vim /sbin/installkernel
+
+...
+CONFIG_XEN_DOM0=y
+CONFIG_XEN_PRIVILEGED_GUEST=y
+...
+
+# apt-get install build-essential
+
+# apt-get install bcc bin86 gawk bridge-utils iproute2 libcurl4 libcurl4-openssl-dev bzip2 transfig tgif mercurial make gcc libc6-dev zlib1g-dev python3 python3-dev python3-pip libnl-3-dev python3-twisted libncurses5-dev patch libvncserver-dev libsdl-dev libjpeg62-turbo-dev iasl libbz2-dev e2fslibs-dev git uuid-dev ocaml ocaml-findlib libx11-dev bison flex xz-utils libyajl-dev gettext libpixman-1-dev libaio-dev markdown pandoc libpci-dev pciutils
+
+# pip install ninja
+
+# cd /path/to/xen
+
+# ./configure
+# make dist
+
+or 
+
+$ make dist-xen
+$ make dist-tools
+$ make dist-docs
+
+# make install
+
+or
+
+# make install-xen
+# make install-tools
+# make install-docs
+# ... etc ...
+
+
+# update-grub2
+
+$ ... etc ...
+
+```
+
+
 ### References
 
 - https://help.ubuntu.com/community/Xen
