@@ -240,6 +240,84 @@ test@test:~$ dmesg |grep -i xen
 test@test:~$
 ```
 
+### Xen tracing
+
+```
+# xentrace -T 10 xentrace_sample
+# xenalyze xentrace_sample
+
+No output defined, using summary.
+Using VMX hardware-assisted virtualization.
+scan_for_new_pcpu: Activating pcpu 1 at offset 0
+Creating vcpu 1 for dom 32768
+init_pcpus: through first trace write, done for now.
+Creating domain 0
+Creating vcpu 0 for dom 0
+Using first_tsc for d0v0 (1240203 cycles)
+scan_for_new_pcpu: Activating pcpu 0 at offset 13912
+Creating vcpu 0 for dom 32768
+Creating domain 32767
+Creating vcpu 1 for dom 32767
+Creating vcpu 1 for dom 0
+Creating vcpu 0 for dom 32767
+Using first_tsc for d32767v0 (33279 cycles)
+read_record: read returned zero, deactivating pcpu 0
+deactivate_pcpu: setting d32767v0 to state LOST
+read_record: read returned zero, deactivating pcpu 1
+deactivate_pcpu: setting d0v0 to state LOST
+deactivate_pcpu: Setting max_active_pcpu to -1
+Total time: 7.49 seconds (using cpu speed 2.40 GHz)
+--- Log volume summary ---
+ - cpu 0 -
+ gen   :          8
+ sched :     282600
+ pv    :      67844
+ - cpu 1 -
+ gen   :         40
+ sched :     314136
+ pv    :     132084
+ hw    :       3816
+|-- Domain 0 --|
+ Runstates:
+   blocked:     733  7.34s 24030691 {6863514|50726184|150083580}
+  partial run:     796  0.13s 389582 {136749|521490|16292226}
+  full run:     101  0.01s 201363 { 93450|238689|2795235}
+  partial contention:     767  0.01s  35681 { 29553| 35343|950217}
+  concurrency_hazard:     136  0.00s  39034 { 21921| 74259|323034}
+  full_contention:      73  0.00s  25470 { 16917| 30129| 42684}
+ Grant table ops:
+  Done by:
+  Done for:
+ Populate-on-demand:
+  Populated:
+  Reclaim order:
+  Reclaim contexts:
+-- v0 --
+ Runstates:
+   running:     467  0.09s 482969 {235239|559149|1667760}
+  runnable:     466  0.01s  45718 { 25734| 40902|1040919}
+        wake:     466  0.01s  45718 { 25734| 40902|1040919}
+   blocked:     466  7.39s 38052846 {13925433|73252032|180014346}
+ cpu affinity:       1 17975278527 {17975278527|17975278527|17975278527}
+   [1]:       1 17975278527 {17975278527|17975278527|17975278527}
+PV events:
+  emulate privop  2718
+  hypercall  4161
+    mmu_update                   [ 1]:     21
+    stack_switch                 [ 3]:    700
+    xen_version                  [17]:     11
+    iret                         [23]:   1041
+    vcpu_op                      [24]:   1031
+    set_segment_base             [25]:    700
+    mmuext_op                    [26]:     15
+    sched_op                     [29]:    468
+    evtchn_op                    [32]:     14
+    physdev_op                   [33]:    159
+    sysctl                       [35]:      1
+...
+```
+
+
 ### Build Xen from source code
 
 ```
