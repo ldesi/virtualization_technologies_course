@@ -1,12 +1,13 @@
-## Summary
+# Summary
 
 In this tutorial we will see:
 * Basic installation of Xen 4.14 on Debian 11
 * Creation of PV, HVM, PVHVM guests
 * Xen tracing
 * Xen build from source code
+* KVM and paravirtual devices: virtio and vhost
 
-### Setup network
+## Setup network
 
 ```
 root@test:# apt-get install bridge-utils
@@ -37,7 +38,7 @@ xenbr0		8000.00505686cf9c	no		ens33
 root@test:~#
 ```
 
-### Install XEN
+## Install XEN
 
 ```
 root@test:~# apt-get install xen-system-amd64
@@ -82,7 +83,7 @@ GRUB_CMDLINE_XEN="com2=115200,8n1 console=com2 dom0_mem=1024M,max:1024M dom0_max
 ...
 ```
 
-### PV guest
+## PV guest
 
 Check info about the hypervisor and Dom0 including version, free memory, etc.:
 
@@ -227,7 +228,7 @@ root@test:~# apt install libvirt-clients libvirt-daemon-system virtinst
 root@test:~# virt-install --connect=xen:/// --name ubuntu_test_14.04 --ram 1024 --disk ubuntu_test_14.04.img,size=5 --location http://ftp.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/ --graphics none
 ```
 
-### HVM and PVHVM guests
+## HVM and PVHVM guests
 
 The HVM mode inlcudes using hardware support to virtualize CPU. Virtualization hardware extensions are used to boost performance of the emulation. HVM requires Intel VT-x or AMD-V hardware extensions, and QEMU is used to emulate devices. In order to leverage paravirtualized drivers, you can leverage also PVHVM mode, which allows running PV guests within HVM context.
 The [ubuntu-hvm-example.cfg](ubuntu-hvm-example.cfg) and [ubuntu-pvhvm-example.cfg](ubuntu-pvhvm-example.cfg) configuration files allow running respectively a HVM and PVHVM VM. In particular, once you start the VM in PVHVM, try to check, e.g., if pv drivers are loaded wihtin the HVM machine.
@@ -242,9 +243,9 @@ test@test:~$ dmesg |grep -i xen
 test@test:~$
 ```
 
-### Xen tracing
+## Xen tracing
 
-#### Xen trace with PV mode
+### Xen trace with PV mode
 ```
 # xentrace -T 10 xentrace_sample_pv
 # xenalyze xentrace_sample_pv
@@ -320,7 +321,7 @@ PV events:
 ...
 ```
 
-#### Xen trace with HVM mode
+### Xen trace with HVM mode
 
 ```
 # xentrace -T 10 xentrace_sample_hvm
@@ -369,7 +370,7 @@ Exit reasons:
 ```
 
 
-### Build Xen from source code
+## Build Xen from source code
 
 ```
 # git clone git://xenbits.xen.org/xen.git
@@ -416,9 +417,9 @@ $ ... etc ...
 
 ```
 
-### KVM and paravirtual devices: virtio and vhost
+## KVM and paravirtual devices: virtio and vhost
 
-#### Start VM with virtio-net device:
+### Start VM with virtio-net device:
 
 ```
 # qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
@@ -427,7 +428,7 @@ $ ... etc ...
 	-m 1024 -smp 4 -enable-kvm
 ```
 
-#### Start VM with vhost-net device
+### Start VM with vhost-net device
 
 On the host you need a kernel with ``CONFIG_VHOST_NET=y`` and in the guest you need a kernel with ``CONFIG_PCI_MSI=y``. Then:
 
@@ -440,7 +441,7 @@ qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
 
 
 
-### References
+## References
 
 - https://help.ubuntu.com/community/Xen
 - https://wiki.xenproject.org/wiki/Xen_Project_Beginners_Guide
