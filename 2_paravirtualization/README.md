@@ -455,5 +455,9 @@ qemu-system-x86_64 -drive "file=bionic-server-cloudimg-amd64.img,format=qcow2" \
 - https://help.ubuntu.com/community/Xen
 - https://wiki.xenproject.org/wiki/Xen_Project_Beginners_Guide
 - https://wiki.xenproject.org/wiki/Xen_Linux_PV_on_HVM_drivers
+- https://wiki.xenproject.org/wiki/Linux_PVH
+- https://linux.die.net/man/8/xentrace
+- https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-kvm_para_virtualized_virtio_drivers-using_kvm_virtio_drivers_for_nic_devices
+- https://www.linux-kvm.org/page/UsingVhost
 
 
