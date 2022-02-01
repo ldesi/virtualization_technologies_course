@@ -322,5 +322,10 @@ In that case, as soon as a task terminates or fails, the swarm manager reschedul
 
 ### 5. Delete the swarm
 
-In order to remove the swarm you need to remove each worker node and the master from the swarm itself, by using ``docker swarm leave``. Note that you need to specify the ``--force`` flag when you run the command within the master node.
+In order to remove the swarm you need to remove each worker node and the master from the swarm itself, by using ``docker swarm leave``. Note that you need to specify the ``--force`` flag when you run the command within the master node. E.g.:
+
+```
+root@dockertest1:~# docker swarm leave --force
+Node left the swarm.
+```
 
