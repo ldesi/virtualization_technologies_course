@@ -320,3 +320,7 @@ root@dockertest1:~# docker node update --availability active dockertest2
 ```
 In that case, as soon as a task terminates or fails, the swarm manager reschedules another task on the _dockertest2_ node.
 
+### 5. Delete the swarm
+
+In order to remove the swarm you need to remove each worker node and the master from the swarm itself, by using ``docker swarm leave``. Note that you need to specify the ``--force`` flag when you run the command within the master node.
+
