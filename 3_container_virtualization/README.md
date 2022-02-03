@@ -329,3 +329,29 @@ root@dockertest1:~# docker swarm leave --force
 Node left the swarm.
 ```
 
+### 6. Deploy HA service with ``docker stack```
+
+When running Docker Engine in swarm mode, we can run ``docker stack deploy``command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file.
+
+Check [hello_world_compose.yml](hello_world_compose.yml) compose file that drives master node to deploy properly the service.
+
+To deploy the stack:
+```
+# docker stack deploy --compose-file=/PATH/TO/hello_world_compose.yml hellojs_stack
+Creating network hellojs_stack_web
+Creating service hellojs_stack_hellojs
+Creating service hellojs_stack_proxy
+```
+
+To remove the stack:
+```
+# docker stack rm hellojs_stack
+Removing service hellojs_stack_hellojs
+Removing service hellojs_stack_proxy
+Removing network hellojs_stack_web
+```
+
+
+
+
+
