@@ -334,7 +334,7 @@ Node left the swarm.
 When running Docker Engine in swarm mode, we can run ``docker stack deploy``command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file.
 
 #### NodeJS hello world example
-Check [hello_world_compose.yml](hello_world_compose.yml) compose file that drives master node to deploy properly the service.
+Check [hello_world_compose.yml](hello_world_nodejs/hello_world_compose.yml) compose file that drives master node to deploy properly the service.
 
 To deploy the stack:
 ```
@@ -357,7 +357,7 @@ Removing network hellojs_stack_web
 ```
 #### MongoDB+NodeJS example
 
-Check [mongo_nodejs_example.yml](mongo_nodejs_example.yml) compose file that drives master node to deploy properly the service.
+Check [mongo_nodejs_example.yml](mongo_nodejs_example/mongo_nodejs_example.yml) compose file that drives master node to deploy properly the service.
 
 ```
 # // On all worker nodes
