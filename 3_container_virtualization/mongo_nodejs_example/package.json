@@ -1,0 +1,11 @@
+{
+    "name": "amazeriffic",
+    "description": "The best ToDo list app in the history of the world",
+    "version": "0.0.1",
+    "dependencies": {
+        "bson": "^4.3.0",
+        "express": "^4.17.1",
+        "http": "0.0.1-security",
+        "mongoose": "^5.12.7"
+    }
+}
