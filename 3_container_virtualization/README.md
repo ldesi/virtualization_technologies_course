@@ -338,7 +338,10 @@ Check [hello_world_compose.yml](hello_world_compose.yml) compose file that drive
 
 To deploy the stack:
 ```
+# // On all worker nodes
 # docker built -t hellojs /PATH/TO/hello_world_nodejs/
+# docker pull dockercloud/haproxy
+# // On master node
 # docker stack deploy --compose-file=/PATH/TO/hello_world_compose.yml hellojs_stack
 Creating network hellojs_stack_web
 Creating service hellojs_stack_hellojs
@@ -357,7 +360,11 @@ Removing network hellojs_stack_web
 Check [mongo_nodejs_example.yml](mongo_nodejs_example.yml) compose file that drives master node to deploy properly the service.
 
 ```
+# // On all worker nodes
 # docker built -t mongo_nodejs_image /PATH/TO/mongo_nodejs_example/
+# docker pull dockercloud/haproxy
+# docker pull mongo
+# // On master node
 # docker stack deploy --compose-file=/PATH/TO/mongo_nodejs_example.yml mongo_nodejs_stack
 ```
 
