@@ -331,7 +331,7 @@ Node left the swarm.
 
 ### 6. Deploy HA service with ``docker stack``
 
-When running Docker Engine in swarm mode, we can run ``docker stack deploy`` command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file. Compose files in the following need to specify the behavior for the swarm. In particular, according to the following:
+When running Docker Engine in swarm mode, we can run ``docker stack deploy`` command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file. Compose files (.yml) used in the following examples specify the behavior for the swarm. In particular, let's check the next snippet:
 
 ```
 ...
@@ -344,7 +344,7 @@ deploy:
 ...
 ```
 
-we can notice:
+We can notice:
 
 - ``deploy``: specify configuration related to the deployment and running of services. This only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up and docker-compose run.
 - ``replicas``: If the service is replicated (which is the default), specify the number of containers that should be running at any given time.
