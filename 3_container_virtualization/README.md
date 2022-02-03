@@ -322,7 +322,7 @@ In that case, as soon as a task terminates or fails, the swarm manager reschedul
 
 ### 5. Delete the swarm
 
-In order to remove the swarm you need to remove each worker node and the master from the swarm itself, by using ``docker swarm leave``. Note that you need to specify the ``--force`` flag when you run the command within the master node. E.g.:
+In order to remove the swarm, you need to remove each worker node and the master from the swarm itself, by using ``docker swarm leave``. Note that you need to specify the ``--force`` flag when you run the command within the master node. E.g.:
 
 ```
 root@dockertest1:~# docker swarm leave --force
@@ -331,7 +331,7 @@ Node left the swarm.
 
 ### 6. Deploy HA service with ``docker stack``
 
-When running Docker Engine in swarm mode, we can run ``docker stack deploy``command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file. Compose files in the following need to specify the behavior for the swarm. In particular, according to the following:
+When running Docker Engine in swarm mode, we can run ``docker stack deploy`` command to deploy a complete application stack to the swarm. The deploy command accepts a stack description in the form of a Compose file. Compose files in the following need to specify the behavior for the swarm. In particular, according to the following:
 
 ```
 ...
@@ -356,7 +356,7 @@ we can notice:
 
 
 #### NodeJS hello world example
-Check [hello_world_compose.yml](hello_world_nodejs/hello_world_compose.yml) compose file that drives master node to deploy properly the service.
+Check [hello_world_compose.yml](hello_world_nodejs/hello_world_compose.yml) compose file that drives the master node to deploy properly the service.
 
 To deploy the stack:
 ```
@@ -379,7 +379,7 @@ Removing network hellojs_stack_web
 ```
 #### MongoDB+NodeJS example
 
-Check [mongo_nodejs_example.yml](mongo_nodejs_example/mongo_nodejs_example.yml) compose file that drives master node to deploy properly the service.
+Check [mongo_nodejs_example.yml](mongo_nodejs_example/mongo_nodejs_example.yml) compose file that drives the master node to deploy properly the service.
 
 ```
 # // On all worker nodes
