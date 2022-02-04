@@ -349,7 +349,7 @@ We can notice:
 - ``deploy``: specify configuration related to the deployment and running of services. This only takes effect when deploying to a swarm with docker stack deploy, and is ignored by docker-compose up and docker-compose run.
 - ``replicas``: If the service is replicated (which is the default), specify the number of containers that should be running at any given time.
 - ``restart_policy``: Configures if and how to restart containers when they exit. Replaces restart. 
-  - ``condition``: One of ``none``, ``on-failure`` or ``any`` (default: any).
+  - ``condition``: One of ``none``, ``on-failure`` (non-zero exit code) or ``any`` (always restart the container if it stops) (default: any).
   - ``delay``: How long to wait between restart attempts, specified as a duration (default: 5s).
   - ``max_attempts``: How many times to attempt to restart a container before giving up (default: never give up). If the restart does not succeed within the configured window, this attempt doesn’t count toward the configured max_attempts value. For example, if max_attempts is set to ‘2’, and the restart fails on the first attempt, more than two restarts may be attempted.
   - ``window``: How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
