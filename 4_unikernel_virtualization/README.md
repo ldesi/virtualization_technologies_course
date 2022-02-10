@@ -120,6 +120,18 @@ Start unikernel VM:
 
 ```
 $ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-pci,netdev=en0 -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" -append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" -enable-kvm -nographic 
+
+Booting from ROM..0: Set IPv4 address 172.44.0.2 mask 255.255.255.0 gw 172.44.0.1
+en0: Added
+en0: Interface is up
+Powered by
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+                   Tethys 0.5.0~b8be82b
+Listening on port 8123...
 ```
 
 Get index.html:
@@ -137,5 +149,4 @@ index.html.1                          [ <=>                                     
 2022-02-10 14:06:13 (13.6 MB/s) - ‘index.html.1’ saved [160]
 
 test@test:~$
-
 ```
