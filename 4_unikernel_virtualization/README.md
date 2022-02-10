@@ -134,7 +134,7 @@ oOo oOO| | | | |   (| | | (_) |  _) :_
 Listening on port 8123...
 ```
 
-Get index.html:
+Get file ``index.html``:
 
 ```
 $ wget 172.44.0.2:8123
