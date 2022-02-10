@@ -99,7 +99,7 @@ Create a Linux bridge to assign static IP to unikernel NIC:
 
 ```
 $ sudo brctl addbr myvirbr0
-$ sudo ip a a  192.168.100.0/24 dev myvirbr0
+$ sudo ip a a 172.44.0.1/24 dev myvirbr0
 $ sudo ip l set dev myvirbr0 up
 ```
 
@@ -119,9 +119,20 @@ $ sudo chmod 0640 /etc/qemu/bridge.conf
 Start unikernel VM:
 
 ```
-$ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 \
-    -device virtio-net-pci,netdev=en0 \
-    -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" \
-    -append "netdev.ipv4_addr=192.168.100.2 netdev.ipv4_gw_addr=192.168.100.1 netdev.ipv4_subnet_mask=255.255.255.0 --" \
-    -enable-kvm -nographic 
+$ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-pci,netdev=en0 -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" -append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" -enable-kvm -nographic 
 ```
+
+Get index.html:
+
+$ wget 172.44.0.2:8123
+--2022-02-10 14:06:13--  http://172.44.0.2:8123/
+Connecting to 172.44.0.2:8123... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.html.1’
+
+index.html.1                          [ <=>                                                         ]     160  --.-KB/s    in 0s
+
+2022-02-10 14:06:13 (13.6 MB/s) - ‘index.html.1’ saved [160]
+
+test@test:~$
