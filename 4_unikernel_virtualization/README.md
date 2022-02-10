@@ -150,3 +150,10 @@ index.html.1                          [ <=>                                     
 
 test@test:~$
 ```
+
+If you want to clean up created bridge, run the following:
+
+```
+$ sudo ip l set dev myvirbr0 down
+$ sudo brctl delbr myvirbr0
+```
