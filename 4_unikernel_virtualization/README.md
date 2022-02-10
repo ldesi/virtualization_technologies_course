@@ -124,6 +124,7 @@ $ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-p
 
 Get index.html:
 
+```
 $ wget 172.44.0.2:8123
 --2022-02-10 14:06:13--  http://172.44.0.2:8123/
 Connecting to 172.44.0.2:8123... connected.
@@ -136,3 +137,5 @@ index.html.1                          [ <=>                                     
 2022-02-10 14:06:13 (13.6 MB/s) - ‘index.html.1’ saved [160]
 
 test@test:~$
+
+```
