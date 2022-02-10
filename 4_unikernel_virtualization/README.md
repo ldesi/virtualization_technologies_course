@@ -97,24 +97,31 @@ For more information about `kraft` type `kraft -h` or read the
 
 Create a Linux bridge to assign static IP to unikernel NIC:
 
+```
 $ sudo brctl addbr myvirbr0
 $ sudo ip a a  192.168.100.0/24 dev myvirbr0
 $ sudo ip l set dev myvirbr0 up
+```
 
 Create and start httpreply unikernel by assigning 192.168.100.2 internal IP.
 
+```
 $ sudo vim /etc/qemu/bridge.conf
+```
 
 Add the following line ``allow myvirbr0``. Then:
 
+```
 $ sudo chown root:root /etc/qemu/bridge.conf
 $ sudo chmod 0640 /etc/qemu/bridge.conf
+```
 
 Start unikernel VM:
 
+```
 $ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 \
     -device virtio-net-pci,netdev=en0 \
     -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" \
     -append "netdev.ipv4_addr=192.168.100.2 netdev.ipv4_gw_addr=192.168.100.1 netdev.ipv4_subnet_mask=255.255.255.0 --" \
-    -enable-kvm -nographic
-    
+    -enable-kvm -nographic 
+```
