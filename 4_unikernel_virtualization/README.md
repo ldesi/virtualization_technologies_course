@@ -116,9 +116,10 @@ $ sudo chown root:root /etc/qemu/bridge.conf
 $ sudo chmod 0640 /etc/qemu/bridge.conf
 ```
 
-Start unikernel VM:
+Create and start the unikernel VM:
 
 ```
+$ kraft up -p kvm -m x86_64 -t httpreply@staging httpreply_unikernel_kvm
 $ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-pci,netdev=en0 -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" -append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" -enable-kvm -nographic 
 
 Booting from ROM..0: Set IPv4 address 172.44.0.2 mask 255.255.255.0 gw 172.44.0.1
