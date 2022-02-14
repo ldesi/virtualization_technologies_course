@@ -40,7 +40,6 @@ $ apt-get update && apt-get install -y u-boot-tools vim git make gcc sshfs pytho
 $ mkdir /p1
 $ mount /dev/mmcblk0p1 /p1
 $ vi /p1/boot.cmd
-$ umount /p1
 ```
 
 Append ``mem=932M vmalloc=512M`` at the end of the first line that starts with setenv bootargs.
