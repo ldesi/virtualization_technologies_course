@@ -155,7 +155,7 @@ On Compiling Machine,
 $ mkdir ~/bpi_root
 $ sshfs root@<BANANAPI_HOST_IP>:/ ~/bpi_root
 $ cd ~/jailhouse
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=~/bpi_root install
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=/PATH/TO/bpi_root install
 ```
 
 ## Testing Jailhouse On BananaPi
