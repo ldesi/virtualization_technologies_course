@@ -71,11 +71,13 @@ bootm 0x48000000
 fi
 ```
 
-After saving the file, create u-boot recognizable image *.src from *.cmd using mkimage:
+After saving the file, create u-boot recognizable image _*.src_ from _*.cmd_ using ``mkimage`` and reboot:
 
 ```
 $ cd /p1
 $ mkimage -C none -A arm -T script -d boot.cmd boot.scr
+$ umount /p1
+$ reboot -n -f
 ```
 
 ## Cross-compile kernel and build jailhouse with FreeRTOS cell
