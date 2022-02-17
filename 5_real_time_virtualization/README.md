@@ -194,8 +194,9 @@ On BananaPI, execute:
 # tty-clock -sct -f "%a, %d %b %Y %T %z"
 
 // on 2nd terminal
-# load_freertos_cell.sh 
-# start_freertos_cell.sh TIMEOUT
+# ./load_banana_root_cell.sh /PATH/TO/jailhouse
+# ./load_freertos_cell.sh /PATH/TO/jailhouse
+# ./start_freertos_cell.sh TIMEOUT /PATH/TO/freertos-cell/
 
 // on 3rd terminal
 # ./stress_cpu.sh TIMEOUT
