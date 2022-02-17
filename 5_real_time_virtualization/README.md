@@ -71,11 +71,13 @@ bootm 0x48000000
 fi
 ```
 
-After saving the file, create u-boot recognizable image *.src from *.cmd using mkimage:
+After saving the file, create u-boot recognizable image _*.src_ from _*.cmd_ using ``mkimage`` and reboot:
 
 ```
 $ cd /p1
 $ mkimage -C none -A arm -T script -d boot.cmd boot.scr
+$ umount /p1
+$ reboot -n -f
 ```
 
 ## Cross-compile kernel and build jailhouse with FreeRTOS cell
@@ -155,7 +157,7 @@ On Compiling Machine,
 $ mkdir ~/bpi_root
 $ sshfs root@<BANANAPI_HOST_IP>:/ ~/bpi_root
 $ cd ~/jailhouse
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=~/bpi_root install
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=/PATH/TO/bpi_root install
 ```
 
 ## Testing Jailhouse On BananaPi
@@ -192,8 +194,9 @@ On BananaPI, execute:
 # tty-clock -sct -f "%a, %d %b %Y %T %z"
 
 // on 2nd terminal
-# load_freertos_cell.sh 
-# start_freertos_cell.sh TIMEOUT
+# ./load_banana_root_cell.sh /PATH/TO/jailhouse
+# ./load_freertos_cell.sh /PATH/TO/jailhouse
+# ./start_freertos_cell.sh TIMEOUT /PATH/TO/freertos-cell/
 
 // on 3rd terminal
 # ./stress_cpu.sh TIMEOUT
