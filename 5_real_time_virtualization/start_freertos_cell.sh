@@ -31,6 +31,3 @@ sleep $TIMEOUT
 
 echo "Shutdown FreeRTOS cell"
 jailhouse cell shutdown FreeRTOS
-
-echo "Destroy FreeRTOS cell"
-jailhouse cell destroy FreeRTOS
