@@ -7,11 +7,5 @@ if [ -z ${JAILHOUSE_PATH} ]; then
 	exit -1
 fi
 
-echo "Load jailhouse module..."
-modprobe jailhouse
-
-echo "Enable root cell..."
-jailhouse enable ${JAILHOUSE_PATH}/configs/arm/bananapi.cell
-
 echo "Create FreeRTOS cell..."
 jailhouse cell create ${JAILHOUSE_PATH}/configs/arm/bananapi-freertos-demo.cell
