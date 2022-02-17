@@ -200,6 +200,9 @@ On BananaPI, execute:
 
 // on 3rd terminal
 # ./stress_cpu.sh TIMEOUT
+
+// to remove FreeRTOS cell
+# ./destroy_freertos_cell.sh
 ```
 
 In the following, we show an example of what is supposed to be shown once start the demo. To check if Jailhouse can assure temporal isolation,
