@@ -118,7 +118,6 @@ Before compiling jailhouse and FreeRTOS, you need to patch ``bananapi_jailhouse.
 # git apply ../bananapi_jailhouse.patch
 # cp -av freertos-cell/jailhouse-configs/bananapi.c jailhouse/configs/arm/bananapi.c
 # cp -av freertos-cell/jailhouse-configs/bananapi-freertos-demo.c jailhouse/configs/arm/
-# cp -av jailhouse/ci/jailhouse-config-banana-pi.h jailhouse/include/config.h
 
 # cd jailhouse
 # make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19/
