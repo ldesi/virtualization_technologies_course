@@ -6,6 +6,6 @@
         "bson": "^4.3.0",
         "express": "^4.17.1",
         "http": "0.0.1-security",
-        "mongoose": "^5.12.7"
+        "mongoose": ">=5.13.15"
     }
 }
