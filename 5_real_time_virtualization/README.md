@@ -1,5 +1,7 @@
 # LESSON 5_Real-time_Virtualization: Hands-on session
 
+> **_NOTE:_** If you want to run Jailhouse immediately, skip to the [impatient](https://github.com/ldesi/virtualization_technologies_course/blob/master/5_real_time_virtualization/README.md#im-impatient) section :)
+
 In order to execute the following demo, you need a compiling machine with Linux (e.g., Ubuntu 18.04), and a BananaPI board (ref. [1]). 
 Both machines should be on the same network subnet.
 
