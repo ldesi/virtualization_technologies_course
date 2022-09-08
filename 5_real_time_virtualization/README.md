@@ -281,8 +281,30 @@ struct {
 
 Naturally, we need to update accordingly the number of memory-mapped regions used by the root cell (``struct jailhouse_memory mem_regions[]``)
 
-## References
+## I'm impatient!
 
+Ok, if you want to just run Jailhouse with a simple demo (APIC demo), you can run the provided demo on Intel x86 by using QEMU. It is recommended QEMU v4.2.0+
+
+Download Jailhouse Intel x86 image [here](), then, run the following.
+
+```
+/PATH/TO/qemu-system-x86_64 \
+	-drive file=/path/to/images/jailhouse_x86_shrink.qcow2,format=qcow2,if=none,id=drive-ide0-0-0 \
+	-device ide-hd,bus=ide.0,unit=0,drive=drive-ide0-0-0,id=ide0-0-0,bootindex=2 \
+	-drive if=none,id=drive-ide0-0-1,readonly=on \
+	-m 1G \
+	-serial mon:stdio \
+	-netdev user,id=net \
+	-cpu host,-kvm-asyncpf,-kvm-steal-time,-kvmclock \
+	-smp 4 -enable-kvm -machine q35,kernel_irqchip=split \
+	-serial vc \
+	-device intel-iommu,intremap=on,x-buggy-eim=on \
+	-device e1000e,addr=2.0,netdev=net \
+	-device intel-hda,addr=1b.0 \
+	-device hda-duplex \
+	-vga vmware
+```
+## References
 
 1. BananaPI docs. https://pi4j.com/1.2/pins/lemaker-bananapi.html
 2. USB to Serial RS232 CP210x. https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
