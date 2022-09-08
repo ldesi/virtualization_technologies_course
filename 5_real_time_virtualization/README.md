@@ -288,7 +288,7 @@ Ok, if you want to just run Jailhouse with a simple application (APIC), you can 
 Download Jailhouse Intel x86 image [here](), then, run the following.
 
 ```
-/PATH/TO/qemu-system-x86_64 \
+# /PATH/TO/qemu-system-x86_64 \
 	-drive file=/path/to/images/jailhouse_x86_shrink.qcow2,format=qcow2,if=none,id=drive-ide0-0-0 \
 	-device ide-hd,bus=ide.0,unit=0,drive=drive-ide0-0-0,id=ide0-0-0,bootindex=2 \
 	-drive if=none,id=drive-ide0-0-1,readonly=on \
@@ -304,6 +304,17 @@ Download Jailhouse Intel x86 image [here](), then, run the following.
 	-device hda-duplex \
 	-vga vmware
 ```
+
+On the Jailhouse VM, ``start_wl.sh`` allows you to enable Jailhouse hypervisor and the root cell, create a non-root cell with APIC demo, start (within a timeout) the APIC cell, and destroy all the created cells at the completion. For example, if you want to execute the demo for 10 seconds, run the following:
+
+```
+# ./start_wl.sh jailhouse/ 10
+```
+
+The output will be something like in the following:
+
+<div style="text-align:center"><img src="imgs/intel_demo_output_example.png" /></div>
+
 ## References
 
 1. BananaPI docs. https://pi4j.com/1.2/pins/lemaker-bananapi.html
