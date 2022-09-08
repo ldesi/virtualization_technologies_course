@@ -1,4 +1,4 @@
-## Tutorial Docker and Swarm
+# LESSON 3_Container_based_virtualization: Hands-on sessions
 
 This tutorial requires three Linux hosts with Docker installed and can communicate over a network creating a Docker swarm. These can be physical machines, virtual machines, or hosted in some other way.
 One of these machines will be the swarm manager (called manager1) and the other two the swarm workers (worker1 and worker2).

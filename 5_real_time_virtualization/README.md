@@ -1,4 +1,4 @@
-## Introduction
+# LESSON 5_Real-time_Virtualization: Hands-on session
 
 In order to execute the following demo, you need a compiling machine with Linux (e.g., Ubuntu 18.04), and a BananaPI board (ref. [1]). 
 Both machines should be on the same network subnet.
@@ -40,7 +40,6 @@ $ apt-get update && apt-get install -y u-boot-tools vim git make gcc sshfs pytho
 $ mkdir /p1
 $ mount /dev/mmcblk0p1 /p1
 $ vi /p1/boot.cmd
-$ umount /p1
 ```
 
 Append ``mem=932M vmalloc=512M`` at the end of the first line that starts with setenv bootargs.
@@ -72,11 +71,13 @@ bootm 0x48000000
 fi
 ```
 
-After saving the file, create u-boot recognizable image *.src from *.cmd using mkimage:
+After saving the file, create u-boot recognizable image _*.src_ from _*.cmd_ using ``mkimage`` and reboot:
 
 ```
 $ cd /p1
 $ mkimage -C none -A arm -T script -d boot.cmd boot.scr
+$ umount /p1
+$ reboot -n -f
 ```
 
 ## Cross-compile kernel and build jailhouse with FreeRTOS cell
@@ -117,7 +118,6 @@ Before compiling jailhouse and FreeRTOS, you need to patch ``bananapi_jailhouse.
 # git apply ../bananapi_jailhouse.patch
 # cp -av freertos-cell/jailhouse-configs/bananapi.c jailhouse/configs/arm/bananapi.c
 # cp -av freertos-cell/jailhouse-configs/bananapi-freertos-demo.c jailhouse/configs/arm/
-# cp -av jailhouse/ci/jailhouse-config-banana-pi.h jailhouse/include/config.h
 
 # cd jailhouse
 # make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19/
@@ -156,7 +156,7 @@ On Compiling Machine,
 $ mkdir ~/bpi_root
 $ sshfs root@<BANANAPI_HOST_IP>:/ ~/bpi_root
 $ cd ~/jailhouse
-$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=~/bpi_root install
+$ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KDIR=../linux_siemens_4.19 DESTDIR=/PATH/TO/bpi_root install
 ```
 
 ## Testing Jailhouse On BananaPi
@@ -193,11 +193,15 @@ On BananaPI, execute:
 # tty-clock -sct -f "%a, %d %b %Y %T %z"
 
 // on 2nd terminal
-# load_freertos_cell.sh 
-# start_freertos_cell.sh TIMEOUT
+# ./load_banana_root_cell.sh /PATH/TO/jailhouse
+# ./load_freertos_cell.sh /PATH/TO/jailhouse
+# ./start_freertos_cell.sh TIMEOUT /PATH/TO/freertos-cell/
 
 // on 3rd terminal
 # ./stress_cpu.sh TIMEOUT
+
+// to remove FreeRTOS cell
+# ./destroy_freertos_cell.sh
 ```
 
 In the following, we show an example of what is supposed to be shown once start the demo. To check if Jailhouse can assure temporal isolation,
@@ -277,8 +281,41 @@ struct {
 
 Naturally, we need to update accordingly the number of memory-mapped regions used by the root cell (``struct jailhouse_memory mem_regions[]``)
 
-## References
+## I'm impatient!
 
+Ok, if you want to just run Jailhouse with a simple application (APIC), you can run the provided demo on Intel x86 by using QEMU. It is recommended QEMU v4.2.0+
+
+Download Jailhouse Intel x86 image [here](), then, run the following.
+
+```
+# /PATH/TO/qemu-system-x86_64 \
+	-drive file=/path/to/images/jailhouse_x86_shrink.qcow2,format=qcow2,if=none,id=drive-ide0-0-0 \
+	-device ide-hd,bus=ide.0,unit=0,drive=drive-ide0-0-0,id=ide0-0-0,bootindex=2 \
+	-drive if=none,id=drive-ide0-0-1,readonly=on \
+	-m 1G \
+	-serial mon:stdio \
+	-netdev user,id=net \
+	-cpu host,-kvm-asyncpf,-kvm-steal-time,-kvmclock \
+	-smp 4 -enable-kvm -machine q35,kernel_irqchip=split \
+	-serial vc \
+	-device intel-iommu,intremap=on,x-buggy-eim=on \
+	-device e1000e,addr=2.0,netdev=net \
+	-device intel-hda,addr=1b.0 \
+	-device hda-duplex \
+	-vga vmware
+```
+
+On the Jailhouse VM, ``start_wl.sh`` allows you to enable Jailhouse hypervisor and the root cell, create a non-root cell with APIC demo, start (within a timeout) the APIC cell, and destroy all the created cells at the completion. For example, if you want to execute the demo for 10 seconds, run the following:
+
+```
+# ./start_wl.sh jailhouse/ 10
+```
+
+The output will be something like in the following:
+
+<div style="text-align:center"><img src="imgs/intel_demo_output_example.png" /></div>
+
+## References
 
 1. BananaPI docs. https://pi4j.com/1.2/pins/lemaker-bananapi.html
 2. USB to Serial RS232 CP210x. https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers

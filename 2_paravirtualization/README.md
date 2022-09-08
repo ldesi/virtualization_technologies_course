@@ -1,4 +1,4 @@
-# Summary
+# LESSON 2_ParaVirtualization: Hands-on session
 
 In this tutorial we will see:
 * Basic installation of Xen 4.14 on Debian 11

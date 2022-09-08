@@ -1,4 +1,13 @@
-# kraft
+# LESSON 4_Unikernel: Hands-on sessions
+
+---
+**NOTE**
+
+This tutorial is completely took from original github repos https://github.com/unikraft/kraft and https://github.com/unikraft/app-helloworld
+Please refer to them for other details.
+
+---
+
 
 To begin using [Unikraft](https://unikraft.org) you can use the
 command-line utility `kraft`, which is a companion tool used for
@@ -20,45 +29,7 @@ To install `kraft` simply run:
 
 You can then type `kraft` to see its help menu
 
-## Building an Application
-
-The simplest way to get the sources for, build and run an application
-is by running the following commands:
-
-    kraft list update
-    kraft up -t helloworld@staging ./my-first-unikernel
-
-At present, Unikraft and kraft support the following applications:
-
-* [C "hello world"](https://github.com/unikraft/app-helloworld) (`helloworld`);
-* [C "http reply"](https://github.com/unikraft/app-httpreply) (`httpreply`);
-* [C++ "hello world"](https://github.com/unikraft/app-helloworld-cpp) (`helloworld-cpp`);
-* [Golang](https://github.com/unikraft/app-helloworld-go) (`helloworld-go`);
-* [Python 3](https://github.com/unikraft/app-python3) (`python3`);
-* [Micropython](https://github.com/unikraft/app-micropython) (`micropython`);
-* [Ruby](https://github.com/unikraft/app-ruby) (`ruby`);
-* [Lua](https://github.com/unikraft/app-lua) (`lua`);
-* [Click Modular Router](https://github.com/unikraft/app-click) (`click`);
-* [JavaScript (Duktape)](https://github.com/unikraft/app-duktape) (`duktape`);
-* [Web Assembly Micro Runtime (WAMR)](https://github.com/unikraft/app-wamr) (`wamr`);
-* [Redis](https://github.com/unikraft/app-redis) (`redis`);
-* [Nginx](https://github.com/unikraft/app-nginx) (`nginx`);
-* [SQLite](https://github.com/unikraft/app-sqlite) (`sqlite`);
-
-For more information about that command type `kraft up -h`. For more information
-about `kraft` type ```kraft -h``` or read the documentation at
-[Unikraft's website](https://docs.unikraft.org). If you find any problems please
-[fill out an issue](https://github.com/unikraft/tools/issues/new/choose). Thank
-you!
-
-## Contributing
-
-Please refer to the [`README.md`](https://github.com/unikraft/unikraft/blob/master/README.md)
-as well as the documentation in the [`doc/`](https://github.com/unikraft/unikraft/tree/master/doc)
-subdirectory of the main Unikraft repository.
-
-
-# Unikraft "hello world" Application
+## Unikraft "hello world" Application
 
 This application prints a basic "Hello World!" message.
 
@@ -122,3 +93,68 @@ sudo qemu-system-x86_64 -kernel "build/app-helloworld_kvm-x86_64" \
 For more information about `kraft` type `kraft -h` or read the
 [documentation](http://docs.unikraft.org).
 
+## Unikraft "httpreply" Application
+
+Create a Linux bridge to assign static IP to unikernel NIC:
+
+```
+$ sudo brctl addbr myvirbr0
+$ sudo ip a a 172.44.0.1/24 dev myvirbr0
+$ sudo ip l set dev myvirbr0 up
+```
+
+Create and start httpreply unikernel by assigning 192.168.100.2 internal IP.
+
+```
+$ sudo vim /etc/qemu/bridge.conf
+```
+
+Add the following line ``allow myvirbr0``. Then:
+
+```
+$ sudo chown root:root /etc/qemu/bridge.conf
+$ sudo chmod 0640 /etc/qemu/bridge.conf
+```
+
+Create and start the unikernel VM:
+
+```
+$ kraft up -p kvm -m x86_64 -t httpreply@staging httpreply_unikernel_kvm
+$ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-pci,netdev=en0 -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" -append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" -enable-kvm -nographic 
+
+Booting from ROM..0: Set IPv4 address 172.44.0.2 mask 255.255.255.0 gw 172.44.0.1
+en0: Added
+en0: Interface is up
+Powered by
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+                   Tethys 0.5.0~b8be82b
+Listening on port 8123...
+```
+
+Get file ``index.html``:
+
+```
+$ wget 172.44.0.2:8123
+--2022-02-10 14:06:13--  http://172.44.0.2:8123/
+Connecting to 172.44.0.2:8123... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.html.1’
+
+index.html.1                          [ <=>                                                         ]     160  --.-KB/s    in 0s
+
+2022-02-10 14:06:13 (13.6 MB/s) - ‘index.html.1’ saved [160]
+
+test@test:~$
+```
+
+If you want to clean up created bridge, run the following:
+
+```
+$ sudo ip l set dev myvirbr0 down
+$ sudo brctl delbr myvirbr0
+```
