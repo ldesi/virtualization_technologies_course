@@ -313,7 +313,7 @@ On the Jailhouse VM, ``start_wl.sh`` allows you to enable Jailhouse hypervisor a
 
 The output will be something like in the following:
 
-<div style="text-align:center"><img src="imgs/intel_demo_output_example.png" /></div>
+<div style="text-align:center"><img width="50%" height="50%" src="imgs/intel_demo_output_example.png" /></div>
 
 ## References
 
