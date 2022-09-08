@@ -283,7 +283,7 @@ Naturally, we need to update accordingly the number of memory-mapped regions use
 
 ## I'm impatient!
 
-Ok, if you want to just run Jailhouse with a simple demo (APIC demo), you can run the provided demo on Intel x86 by using QEMU. It is recommended QEMU v4.2.0+
+Ok, if you want to just run Jailhouse with a simple application (APIC), you can run the provided demo on Intel x86 by using QEMU. It is recommended QEMU v4.2.0+
 
 Download Jailhouse Intel x86 image [here](), then, run the following.
 
