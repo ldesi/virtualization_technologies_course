@@ -369,7 +369,7 @@ Check [hello_world_compose.yml](hello_world_nodejs/hello_world_compose.yml) comp
 To deploy the stack:
 ```
 # // On all worker nodes
-# docker built -t hellojs /PATH/TO/hello_world_nodejs/
+# docker build -t hellojs /PATH/TO/hello_world_nodejs/
 # docker pull dockercloud/haproxy
 # // On master node
 # docker stack deploy --compose-file=/PATH/TO/hello_world_compose.yml hellojs_stack
