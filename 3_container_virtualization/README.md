@@ -24,6 +24,14 @@ Install Docker engine:
 apt-get update
 apt-get install docker-ce docker-ce-cli containerd.io
 ```
+
+To manage docker as non-root user:
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
+
 Run the following to check if Docker was installed:
 ```
 docker run hello-world
