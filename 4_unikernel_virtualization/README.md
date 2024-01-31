@@ -3,7 +3,7 @@
 ---
 **NOTE**
 
-This tutorial is completely took from original github repos https://github.com/unikraft/kraft and https://github.com/unikraft/app-helloworld
+This tutorial is completely taken from original GitHub repos https://github.com/unikraft/kraft and [https://github.com/unikraft/catalog/tree/main/examples/helloworld-c](https://github.com/unikraft/catalog/tree/main/examples/helloworld-c)
 Please refer to them for other details.
 
 ---
@@ -17,8 +17,7 @@ unikernel and painlessly manage dependencies for its build.
 
 ## Installing kraft
 
-The `kraft` tool and Unikraft build system have a number of package
-requirements; please run the following command (on `apt-get`-based systems) to
+The `kraft` tool and Unikraft build system have several packages to be installed; please run the following command (on `apt-get`-based systems) to
 install the requirements:
 
     apt-get install -y --no-install-recommends build-essential libncurses-dev libyaml-dev flex git wget socat bison unzip uuid-runtime;
@@ -36,44 +35,66 @@ This application prints a basic "Hello World!" message.
 To configure, build and run the application you need to have [kraft](https://github.com/unikraft/kraft) installed.
 
 To be able to run it, configure the application to run on the desired platform and architecture:
-```
-$ kraft configure -p PLATFORM -m ARCH
-```
 
-Build the application:
 ```
 $ kraft build
 ```
 
-And, finally, run the application:
+```
+# kraft build
+[?] select target:
+    helloworld (fc/arm64)
+    helloworld (fc/x86_64)
+    helloworld (linuxu/x86_64)
+    helloworld (qemu/arm64)
+  ▸ helloworld (qemu/x86_64)
+    helloworld (xen/x86_64)
+```
+
+Choose ``helloworld (qemu/x86_64)`` and, finally, run the application:
 ```
 $ kraft run
-Hello World!
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+                 Telesto 0.16.1~26012b7
+Hello, world!
 ```
 
-If you want to have more control you can also configure, build and run the application manually.
+If you want more control you can also configure, build, and run the application manually by entering directory ``.unikraft/unikraft``and run the following:
 
-To configure it with the desired features:
 ```
 $ make menuconfig
 ```
 
-Build the application:
+Finally, you can build the application:
 ```
 $ make
 ```
 
-Run the application:
-- If you built the application for `kvm`:
+Under ``.unikraft/build`` there are all build artifacts. For a ``qemu-x86_64``-based build, for example, the kernel binary generated is named ``helloworld_qemu-x86_64``. It can be run by explicitly using ``qemu-system-x86_64`` binary as in the following:
+
 ```
 sudo qemu-system-x86_64 -kernel "build/app-helloworld_kvm-x86_64" \
                         -enable-kvm \
                         -nographic
 ```
 
-- If you built the application for `linuxu`:
+- If you built the application bare-metal, choose `linuxu/x86_64`, and run it by:
 ```
-./build/app-helloworld_linuxu-x86_64
+# cd ~/catalog/examples/helloworld-c
+# .unikraft/build/helloworld_linuxu-x86_64
+
+Powered by
+o.   .o       _ _               __ _
+Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
+oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
+oOo oOO| | | | |   (| | | (_) |  _) :_
+ OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
+                 Telesto 0.16.1~26012b7
+Hello, world!
 ```
 
 - If you built the application for `xen`:
@@ -83,7 +104,7 @@ sudo qemu-system-x86_64 -kernel "build/app-helloworld_kvm-x86_64" \
     name          = "app-helloworld"
     vcpus         = "1"
     memory        = "4"
-    kernel        = "./build/app-helloworld_xen-x86_64"
+    kernel        = ".unikraft/build/helloworld_xen-x86_64"
     ```
   - To run the application you can use:
     ```
