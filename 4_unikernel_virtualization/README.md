@@ -77,7 +77,7 @@ $ make
 Under ``.unikraft/build`` there are all build artifacts. For a ``qemu-x86_64``-based build, for example, the kernel binary generated is named ``helloworld_qemu-x86_64``. It can be run by explicitly using ``qemu-system-x86_64`` binary as in the following:
 
 ```
-sudo qemu-system-x86_64 -kernel "build/app-helloworld_kvm-x86_64" \
+sudo qemu-system-x86_64 -kernel ".unikraft/build/helloworld_qemu-x86_64" \
                         -enable-kvm \
                         -nographic
 ```
