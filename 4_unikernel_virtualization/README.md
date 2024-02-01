@@ -9,22 +9,15 @@ Please refer to them for other details.
 ---
 
 
-To begin using [Unikraft](https://unikraft.org) you can use the
-command-line utility `kraft`, which is a companion tool used for
-defining, configuring, building, and running Unikraft applications.
-With `kraft` you can seamlessly create a build environment for your
-unikernel and painlessly manage dependencies for its build.
+To get started building and using Unikraft, you can use the companion command-line tool kraft, allowing you to easily leverage Unikraft unikernels at every stage of their lifecycle, from construction to production.
 
 ## Installing kraft
 
-The `kraft` tool and Unikraft build system have several packages to be installed; please run the following command (on `apt-get`-based systems) to
-install the requirements:
-
-    apt-get install -y --no-install-recommends build-essential libncurses-dev libyaml-dev flex git wget socat bison unzip uuid-runtime;
-
 To install `kraft` simply run:
 
-    pip3 install git+https://github.com/unikraft/kraft.git@staging
+```
+$ curl --proto '=https' --tlsv1.2 -sSf https://get.kraftkit.sh | sh
+```
 
 You can then type `kraft` to see its help menu
 
