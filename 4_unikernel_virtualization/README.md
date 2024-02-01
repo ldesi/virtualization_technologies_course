@@ -114,68 +114,31 @@ Hello, world!
 For more information about `kraft` type `kraft -h` or read the
 [documentation](http://docs.unikraft.org).
 
-## Unikraft "httpreply" Application
+## Unikraft "nginx" Application
 
-Create a Linux bridge to assign static IP to unikernel NIC:
+Under ``~catalog/library/nginx/1.15``you can build an ``nginx`` webserver by running ``kraft build`` as usual.
 
-```
-$ sudo brctl addbr myvirbr0
-$ sudo ip a a 172.44.0.1/24 dev myvirbr0
-$ sudo ip l set dev myvirbr0 up
-```
-
-Create and start httpreply unikernel by assigning 192.168.100.2 internal IP.
+Start nginx unikernel as in the following:
 
 ```
-$ sudo vim /etc/qemu/bridge.conf
+kraft run -p 8080:80
 ```
 
-Add the following line ``allow myvirbr0``. Then:
+If you choose a ``qemu-x86_64``-based build, the command above will run the unikernel ``~catalog/library/nginx/1.15/.unikraft/build/nginx_qemu-x86_64`` with slirp network model and a TCP port forwarding from host (port 8080) to the unikernel guest (port 80). To the if the nginx unikernel is running use ``curl`` like in the following:
 
 ```
-$ sudo chown root:root /etc/qemu/bridge.conf
-$ sudo chmod 0640 /etc/qemu/bridge.conf
-```
+$ curl localhost:8080
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello, world!</title>
+</head>
+<body>
+  <h1>Hello from Unikraft!</h1>
 
-Create and start the unikernel VM:
+  <p>This message shows that your installation appears to be working correctly.</p>
 
-```
-$ kraft up -p kvm -m x86_64 -t httpreply@staging httpreply_unikernel_kvm
-$ sudo qemu-system-x86_64 -netdev bridge,id=en0,br=myvirbr0 -device virtio-net-pci,netdev=en0 -kernel "httpreply_unikernel_kvm/build/httpreply_unikernel_kvm_kvm-x86_64" -append "netdev.ipv4_addr=172.44.0.2 netdev.ipv4_gw_addr=172.44.0.1 netdev.ipv4_subnet_mask=255.255.255.0 --" -enable-kvm -nographic 
-
-Booting from ROM..0: Set IPv4 address 172.44.0.2 mask 255.255.255.0 gw 172.44.0.1
-en0: Added
-en0: Interface is up
-Powered by
-o.   .o       _ _               __ _
-Oo   Oo  ___ (_) | __ __  __ _ ' _) :_
-oO   oO ' _ `| | |/ /  _)' _` | |_|  _)
-oOo oOO| | | | |   (| | | (_) |  _) :_
- OoOoO ._, ._:_:_,\_._,  .__,_:_, \___)
-                   Tethys 0.5.0~b8be82b
-Listening on port 8123...
-```
-
-Get file ``index.html``:
-
-```
-$ wget 172.44.0.2:8123
---2022-02-10 14:06:13--  http://172.44.0.2:8123/
-Connecting to 172.44.0.2:8123... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: unspecified [text/html]
-Saving to: ‘index.html.1’
-
-index.html.1                          [ <=>                                                         ]     160  --.-KB/s    in 0s
-
-2022-02-10 14:06:13 (13.6 MB/s) - ‘index.html.1’ saved [160]
-
-test@test:~$
-```
-
-If you want to clean up created bridge, run the following:
-
-```
-$ sudo ip l set dev myvirbr0 down
-$ sudo brctl delbr myvirbr0
+  <p></p>For more examples and ideas, visit <a href="https://unikraft.org/docs/">Unikraft's Documentation</a>.</p>
+</body>
+</html>
 ```
