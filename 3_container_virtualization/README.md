@@ -313,7 +313,7 @@ The _flask_helloworld_service.2_ is in a Shutdown state on _dockertest2_ node an
 This is an example Flask app served from 66b6d787a2cd to 10.0.0.2
 This is an example Flask app served from b1701656b1b6 to 10.0.0.2
 This is an example Flask app served from 20d293bc9fb8 to 10.0.0.2
-This is an example Flask app served from 66b6d787a2cd to 10.0.0.2```
+This is an example Flask app served from 66b6d787a2cd to 10.0.0.2
 ```
 
 You can restore to available state the _dockertest2_ node by running:
