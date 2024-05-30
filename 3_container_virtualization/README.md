@@ -265,9 +265,9 @@ By running the following command ``while True; do curl http://192.168.100.101:50
 
 ```
 # while True; do curl http://192.168.100.101:5001/; echo; sleep 1; done                                                                                           
-This is an example Flask app served from **20d293bc9fb8** to 10.0.0.2
-This is an example Flask app served from **7e9d169241d3** to 10.0.0.2
-This is an example Flask app served from **66b6d787a2cd** to 10.0.0.2
+This is an example Flask app served from 20d293bc9fb8 to 10.0.0.2
+This is an example Flask app served from 7e9d169241d3 to 10.0.0.2
+This is an example Flask app served from 66b6d787a2cd to 10.0.0.2
 This is an example Flask app served from 20d293bc9fb8 to 10.0.0.2
 . . .
 #
@@ -310,9 +310,9 @@ The _flask_helloworld_service.2_ is in a Shutdown state on _dockertest2_ node an
 
 ```
 # while True; do curl http://192.168.100.101:5001/; echo; sleep 1; done                                                                                 
-This is an example Flask app served from **66b6d787a2cd** to 10.0.0.2
-This is an example Flask app served from **b1701656b1b6** to 10.0.0.2
-This is an example Flask app served from **20d293bc9fb8** to 10.0.0.2
+This is an example Flask app served from 66b6d787a2cd to 10.0.0.2
+This is an example Flask app served from b1701656b1b6 to 10.0.0.2
+This is an example Flask app served from 20d293bc9fb8 to 10.0.0.2
 This is an example Flask app served from 66b6d787a2cd to 10.0.0.2```
 ```
 
