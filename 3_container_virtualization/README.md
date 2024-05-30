@@ -102,20 +102,20 @@ iptables -F
 
 Let's assume we have 3 hosts named _dockertest1_, _dockertest2_, and _dockertest3_ with the following private IPs:
 
-- _dockertest1_: 10.0.20.151
-- _dockertest2_: 10.0.20.152
-- _dockertest3_: 10.0.20.153
+- _dockertest1_: 192.168.100.101
+- _dockertest2_: 192.168.100.102
+- _dockertest3_: 192.168.100.103
 
 Assume that _dockertest1_ will be the manager node and _dockertest2_ and _dockertest3_ the worker nodes.
 
 Run:
 ```
-root@dockertest1:~# docker swarm init --advertise-addr 10.0.20.151
+root@dockertest1:~# docker swarm init --advertise-addr 192.168.100.101
 Swarm initialized: current node (skj4v2cjmqw4ymh39yckr93x8) is now a manager.
 
 To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 10.0.20.151:2377
+    docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 192.168.100.101:2377
 
 To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 
@@ -140,12 +140,12 @@ Docker Engine swarm mode automatically names the node for the machine hostname.
 
 Now we can join the swarm (manager) by running the following command on _dockertest2_ and _dockertest3_ nodes, using the token generated on the manager node:
 ```
-root@dockertest2:~# docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 10.0.20.151:2377
+root@dockertest2:~# docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 192.168.100.101:2377
 This node joined a swarm as a worker.
 root@dockertest2:~#
 ```
 ```
-root@dockertest3:~# docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 10.0.20.151:2377
+root@dockertest3:~# docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 192.168.100.101:2377
 This node joined a swarm as a worker.
 root@dockertest3:~#
 ```
@@ -155,7 +155,7 @@ We can also retrieve info about how to join the swarm by running the following o
 root@dockertest1:~# docker swarm join-token worker
 To add a worker to this swarm, run the following command:
 
-    docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 10.0.20.151:2377
+    docker swarm join --token SWMTKN-1-474qylwts63dqamyzf4g8dipew73t4uhagllixzh5okq8k4cx0-1yp91b361drv2z6zg2bn9qd2v 192.168.100.101:2377
 
 root@dockertest1:~# docker swarm join-token manager
 ```
@@ -176,6 +176,7 @@ Start a service from the manager node. We specify the helloworld service, with a
 ```
 docker service create --replicas 1 --name helloworld alpine ping www.google.it
 ```
+
 To inspect the service details:
 ```
 root@dockertest1:~# docker service inspect --pretty helloworld
@@ -215,7 +216,7 @@ lv8vp2ttjhjs        helloworld.1        alpine:latest       dockertest2         
 root@dockertest1:~#
 ````
 You can notice that the instance (container) of the service _helloworld_ is running on _dockertest2_ in this case.
-This is confirmed by running ``docker ps``on node _dockertest2_:
+This is confirmed by running ``docker ps`` on node _dockertest2_:
 
 ```
 root@dockertest2:~# docker ps -a
@@ -224,61 +225,53 @@ b66a160d0ce3        alpine:latest       "ping docker.com"   6 days ago          
 root@dockertest2:~#
 ```
 
-### 4. Deploy nginx test service
+### 4. Deploy Flask application
 
-The nginx test service will be used to show load-balancing and high-availability features of Docker Swarm.
-You will deploy the service with 3 replicas managed automatically by Docker Swarm.
-To deploy the nginx test service, you firstly need to create the proper Docker image, by copying _nginx_test_ dir in all the machines in the testbed. Then, you need to run the following on all the nodes (manager and workers):
+The Flask application to be deployed is a simply application with one REST API (default route /), which informs who is replying to HTTP requests.
+You will deploy the Flask application as a service with 3 replicas managed automatically by Docker Swarm. To deploy the service, you firstly need to create the proper Docker image, by copying _dockerized_flask_service_ dir in all the machines in the testbed. Then, you need to run the following on all the nodes (manager and workers):
 
 ```
-# docker build -t nginx_test nginx_test/
+# cd ~/dockerized_flask_service/app/
+# docker build -t flask_image_hello_world .
+
 ```
 To check if the image was built properly, run:
 
 ```
-root@dockertest1:~# docker images
-REPOSITORY                            TAG                 IMAGE ID            CREATED             SIZE
-nginx_test                            latest              036ca8ef1134        11 minutes ago      146MB
-nginx                                 latest              ed21b7a8aee9        10 hours ago        127MB
+root@dockertest1:~# docker images |grep flask_image_hello_world
+flask_image_hello_world              latest        fc27446c3f30   20 hours ago    65.2MB
 root@dockertest1:~#
 ```
 
 Now, you can deploy the service by running:
 
 ```
-docker service create --replicas 3 --name test_webserver --publish 80:80 nginx_test
+docker service create --replicas 3 --name flask_helloworld_service --publish 5001:5001 flask_image_hello_world
 ```
+
 and check the deployment:
+
 ```
-root@dockertest1:~# docker service ps test_webserver
-ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
-pgxqnqncavza        test_webserver.1    nginx_test:latest   dockertest1         Running             Running 16 minutes ago
-q3f66y0842sb        test_webserver.2    nginx_test:latest   dockertest3         Running             Running 16 minutes ago
-jcklkgn3o9yj        test_webserver.3    nginx_test:latest   dockertest2         Running             Running 16 minutes ago
+root@dockertest1:~# docker service ps flask_helloworld_service
+ID             NAME                         IMAGE                            NODE          DESIRED STATE   CURRENT STATE                    ERROR     PORTS
+vzfee3x6pizh   flask_helloworld_service.1   flask_image_hello_world:latest   dockertest3   Running         Running less than a second ago
+1rmmmxmx24q3   flask_helloworld_service.2   flask_image_hello_world:latest   dockertest2   Running         Running 7 seconds ago
+6cey6sqthp9t   flask_helloworld_service.3   flask_image_hello_world:latest   dockertest1   Running         Running 7 seconds ago
 root@dockertest1:~#
 ```
-You can see that is running an instance of test_webserver service (the nginx webserver) on each node in the testbed.
-By running _test_nginx.sh_ script, we make HTTP requests only towards the manager node (dockertest1: 10.0.20.151) and print only the \<h1\> part within the response (check _test_nginx.sh_). You can see the container private IP:
+
+You can see that is running an instance of flask_helloworld_service service (the Flask application) on each node in the testbed.
+By running the following command ``while True; do curl http://192.168.100.101:5001/; echo; sleep 1; done`` we make HTTP requests only towards the manager node (dockertest1: 192.168.100.101:5001). We can observe that Docker Swarm automatically balances requests towards service replicas.
 
 ```
-root@dockertest1:~/nginx_test# ./test_nginx.sh
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.155</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.154</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.155</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.154</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>
-...
-root@dockertest1:~/nginx_test#
+# while True; do curl http://192.168.100.101:5001/; echo; sleep 1; done                                                                                           
+This is an example Flask app served from **20d293bc9fb8** to 10.0.0.2
+This is an example Flask app served from **7e9d169241d3** to 10.0.0.2
+This is an example Flask app served from **66b6d787a2cd** to 10.0.0.2
+This is an example Flask app served from 20d293bc9fb8 to 10.0.0.2
+. . .
+#
 ```
-We can observe that Docker Swarm automatically balances requests towards service replicas.
 
 To test high availability, you can update the status of some worker nodes. Docker Swarm allows you to DRAIN a node and prevent that node from receiving new tasks from the swarm manager. It also means the manager stops tasks running on the node and launches replica tasks on a node with ACTIVE availability.
 
@@ -292,40 +285,43 @@ skj4v2cjmqw4ymh39yckr93x8 *   dockertest1         Ready               Active    
 2rckhcout64izd59zz8qqehit     dockertest2         Ready               Drain                                   19.03.8
 ypznkanigilfgznqvj4u6meu7     dockertest3         Ready               Active                                  19.03.8
 root@dockertest1:~/nginx_test#
+
 ```
 Check nginx container "Exited" status on _dockertest2_:
 ```
 root@dockertest2:~# docker ps -a
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-e99723ee78e6        nginx_test:latest   "/usr/local/edit_ind…"   42 minutes ago      Exited (0) 35 seconds ago                       test_webserver.3.jcklkgn3o9yjzzudmor97pua0
+CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS                      PORTS               NAMES
+7e9d169241d3        flask_image_hello_world:latest   "python3 flask_app.py"   4 minutes ago       Exited (0) 15 seconds ago                       flask_helloworld_service.2.1rmmmxmx24q356rj3kcfmgolo
 root@dockertest2:~#
 ```
+
 The Swarm manager reschedules the instance on other nodes in the swarm. To check this run on manager node:
 ```
-root@dockertest1:~# docker service ps test_webserver
-ID                  NAME                   IMAGE               NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS
-pgxqnqncavza        test_webserver.1       nginx_test:latest   dockertest1         Running             Running 44 minutes ago
-q3f66y0842sb        test_webserver.2       nginx_test:latest   dockertest3         Running             Running 44 minutes ago
-tdmobeebksmj        test_webserver.3       nginx_test:latest   dockertest1         Running             Running 2 minutes ago
-jcklkgn3o9yj         \_ test_webserver.3   nginx_test:latest   dockertest2         Shutdown            Shutdown 2 minutes ago
-root@dockertest1:~#
-```
-The _test_webserver.3_ is in a Shutdown state on _dockertest2_ node and it is in a _Running_ state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keeps the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
-```
-root@dockertest1:~# ./nginx_test/test_nginx.sh
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.153</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.156</h1>
-
-<h1>Welcome to nginx TEST ITEE PHD => HOST: 10.0.0.154</h1>
-
+root@dockertest1:~# docker service ps flask_helloworld_service
+ID             NAME                             IMAGE                            NODE          DESIRED STATE   CURRENT STATE             ERROR     PORTS
+vzfee3x6pizh   flask_helloworld_service.1       flask_image_hello_world:latest   dockertest3   Running         Running 4 minutes ago
+u7aqz355pa0h   flask_helloworld_service.2       flask_image_hello_world:latest   dockertest1   Running         Running 39 seconds ago
+1rmmmxmx24q3    \_ flask_helloworld_service.2   flask_image_hello_world:latest   dockertest2   Shutdown        Shutdown 40 seconds ago
+6cey6sqthp9t   flask_helloworld_service.3       flask_image_hello_world:latest   dockertest1   Running         Running 4 minutes ago
 root@dockertest1:~#
 ```
 
-You can reset to available state the _dockertest2_ node by running:
+The _flask_helloworld_service.2_ is in a Shutdown state on _dockertest2_ node and it is in a _Running_ state on _dockertest1_ node (the first available in the swarm). In the meanwhile, the service availability is kept, and the Swarm manager keeps the desired state (3 running instances). Indeed, by running again _test_nginx.sh_ script, you can notice that there are still 3 replicas responses:
+
+```
+# while True; do curl http://192.168.100.101:5001/; echo; sleep 1; done                                                                                 
+This is an example Flask app served from **66b6d787a2cd** to 10.0.0.2
+This is an example Flask app served from **b1701656b1b6** to 10.0.0.2
+This is an example Flask app served from **20d293bc9fb8** to 10.0.0.2
+This is an example Flask app served from 66b6d787a2cd to 10.0.0.2```
+```
+
+You can restore to available state the _dockertest2_ node by running:
+
 ```
 root@dockertest1:~# docker node update --availability active dockertest2
 ```
+
 In that case, as soon as a task terminates or fails, the swarm manager reschedules another task on the _dockertest2_ node.
 
 ### 5. Delete the swarm
