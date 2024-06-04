@@ -359,6 +359,28 @@ We can notice:
   - ``window``: How long to wait before deciding if a restart has succeeded, specified as a duration (default: decide immediately).
 
 
+#### Flask hello world example
+Check [compose_with_stack.yaml](dockerized_flask_service/compose_with_stack.yaml) compose file that drives the master node to deploy properly the service.
+
+To deploy the stack:
+
+To deploy the stack:
+```
+# // On all worker nodes
+# docker build -t /PATH/TO/flask_image_hello_world_DOCKERFILE
+# // On master node
+# docker stack deploy --compose-file=/PATH/TO/compose_with_stack.yaml dockerized_flask_service_with_stack
+Creating network dockerized_flask_service_replicated_default
+Creating service dockerized_flask_service_replicated_web
+```
+
+To remove the stack:
+```
+# docker stack rm dockerized_flask_service_with_stack
+Removing service dockerized_flask_service_replicated_web
+Removing network dockerized_flask_service_replicated_default
+```
+
 #### NodeJS hello world example
 Check [hello_world_compose.yml](hello_world_nodejs/hello_world_compose.yml) compose file that drives the master node to deploy properly the service.
 
